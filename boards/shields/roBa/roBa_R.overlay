@@ -25,13 +25,15 @@
     };
 };
 
-// Only J/K/L (the mouse click positions on the MOUSE layer) keep the layer
-// alive; any other key press drops back out of the mouse layer immediately.
+// The mouse click positions on the MOUSE layer (J/K/L and M/DOT) keep the
+// layer alive; any other key press drops back out of the mouse layer.
 &zip_temp_layer {
     excluded-positions = <
-        18 // J
-        19 // K
-        20 // L
+        18 // J   (MB1)
+        19 // K   (MB3)
+        20 // L   (MB2)
+        30 // M   (MB4)
+        32 // DOT (MB5)
     >;
 };
 
