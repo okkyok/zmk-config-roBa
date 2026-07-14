@@ -151,8 +151,8 @@
         arrow_layer {
             // 右手側はWindows用ショートカット(Win+矢印スナップ, PrintScreen系)。Mac利用時は要調整。
             bindings = <
-&kp PG_UP  &trans          &kp UP_ARROW    &trans           &kp PG_DN                                        &trans  &trans               &kp LG(UP_ARROW)  &trans             &trans
-&kp HOME   &kp LEFT_ARROW  &kp DOWN_ARROW  &kp RIGHT_ARROW  &kp END      &trans        &kp LC(LG(PRINTSCREEN))  &trans  &kp LG(LEFT_ARROW)  &kp LG(DOWN_ARROW)  &kp LG(RIGHT_ARROW)  &trans
+&kp PG_UP  &trans          &kp UP_ARROW    &trans           &kp PG_DN                                        &trans  &trans               &kp LA(LC(UP_ARROW))  &trans             &trans
+&kp HOME   &kp LEFT_ARROW  &kp DOWN_ARROW  &kp RIGHT_ARROW  &kp END      &trans        &kp LC(LG(PRINTSCREEN))  &trans  &kp LA(LC(LEFT_ARROW))  &kp LA(LC(DOWN_ARROW))  &kp LA(LC(RIGHT_ARROW))  &trans
 &trans     &trans          &trans          &trans           &trans      &trans        &kp LS(PRINTSCREEN)      &trans  &trans               &trans             &trans             &trans
 &trans     &trans          &trans          &trans           &trans      &trans        &kp DELETE               &trans                                          &trans
             >;
