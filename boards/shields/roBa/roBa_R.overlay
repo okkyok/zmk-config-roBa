@@ -1,4 +1,5 @@
 #include "roBa.dtsi"
+#include <input/processors.dtsi>
 
 &default_transform {
     col-offset = <6>;
@@ -19,7 +20,16 @@
         status = "okay";
         compatible = "zmk,input-listener";
         device = <&trackball>;
+        // Auto mouse layer: move to MOUSE(5) on trackball motion, drop after 700ms idle.
+        input-processors = <&zip_temp_layer 5 700>;
     };
+};
+
+// Do not re-enter the mouse layer while typing; do not drop it when pressing
+// the mouse buttons that live on the MOUSE layer (positions 18/19/20/30/32).
+&zip_temp_layer {
+    require-prior-idle-ms = <150>;
+    excluded-positions = <18 19 20 30 32>;
 };
 
 &pinctrl {
