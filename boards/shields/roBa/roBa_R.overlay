@@ -20,16 +20,21 @@
         status = "okay";
         compatible = "zmk,input-listener";
         device = <&trackball>;
-        // Auto mouse layer: move to MOUSE(5) on trackball motion, drop after 700ms idle.
-        input-processors = <&zip_temp_layer 5 700>;
+        // Auto mouse layer: move to MOUSE(5) on trackball motion, drop after 10s idle.
+        input-processors = <&zip_temp_layer 5 10000>;
     };
 };
 
-// Do not re-enter the mouse layer while typing; do not drop it when pressing
-// the mouse buttons that live on the MOUSE layer (positions 18/19/20/30/32).
+// The mouse click positions on the MOUSE layer (J/K/L and M/DOT) keep the
+// layer alive; any other key press drops back out of the mouse layer.
 &zip_temp_layer {
-    require-prior-idle-ms = <150>;
-    excluded-positions = <18 19 20 30 32>;
+    excluded-positions = <
+        18 // J   (MB1)
+        19 // K   (MB3)
+        20 // L   (MB2)
+        30 // M   (MB4)
+        32 // DOT (MB5)
+    >;
 };
 
 &pinctrl {
