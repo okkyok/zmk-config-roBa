@@ -22,6 +22,24 @@
         device = <&trackball>;
         // Auto mouse layer: move to MOUSE(5) on trackball motion, drop after 10s idle.
         input-processors = <&zip_temp_layer 5 10000>;
+
+        // While holding into Gesture_L7/L8/L9, trackball strokes are read as
+        // gestures instead of cursor movement (see zip_mouse_gesture_l7/8/9
+        // in roBa.keymap).
+        gest_on_l7 {
+            layers = <7>;
+            input-processors = <&zip_mouse_gesture_l7>;
+        };
+
+        gest_on_l8 {
+            layers = <8>;
+            input-processors = <&zip_mouse_gesture_l8>;
+        };
+
+        gest_on_l9 {
+            layers = <9>;
+            input-processors = <&zip_mouse_gesture_l9>;
+        };
     };
 };
 
