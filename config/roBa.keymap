@@ -194,8 +194,9 @@
         gesture-cooldown-ms = <120>;
 
         // Virtual desktop (Mission Control space) management
-        desk_prev    { pattern = <GESTURE_LEFT>;  bindings = <&kp LC(LEFT_ARROW)>;  };
-        desk_next    { pattern = <GESTURE_RIGHT>; bindings = <&kp LC(RIGHT_ARROW)>; };
+        // Left/right reversed to mimic trackpad-style natural swipe direction.
+        desk_prev    { pattern = <GESTURE_RIGHT>; bindings = <&kp LC(LEFT_ARROW)>;  };
+        desk_next    { pattern = <GESTURE_LEFT>;  bindings = <&kp LC(RIGHT_ARROW)>; };
         mission_ctrl { pattern = <GESTURE_UP>;    bindings = <&kp LC(UP_ARROW)>;    };
         app_expose   { pattern = <GESTURE_DOWN>;  bindings = <&kp LC(DOWN_ARROW)>;  };
     };
