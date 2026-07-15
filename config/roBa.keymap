@@ -225,7 +225,7 @@
             bindings = <
 &kp Q             &kp W  &kp E     &kp R         &kp T                                                      &kp Y              &kp U        &kp I      &kp O    &lt SCROLL P
 &mt LCTRL A       &mt LS(LGUI) S  &mt LGUI D     &mt LALT F         &mt LCTRL G        &kp TAB                  &mt RC(RS(RA(RGUI))) SEMICOLON  &mt RCTRL H              &mt RALT J        &mt RGUI K      &mt RS(RGUI) L    &lt L7 MINUS
-&mt_exit_AML_on_tap LEFT_SHIFT Z  &kp X  &kp C     &kp V         &kp B        &lt MOUSE LS(TAB)                  &kp DOUBLE_QUOTES  &kp N          &kp M        &kp COMMA  &kp DOT  &mt LEFT_SHIFT SLASH
+&mt_exit_AML_on_tap LEFT_SHIFT Z  &kp X  &kp C     &kp V         &kp B        &lt MOUSE LS(TAB)                  &lt NUM COLON  &kp N          &kp M        &kp COMMA  &kp DOT  &mt LEFT_SHIFT SLASH
 &kp LGUI          &kp LALT  &kp LGUI  &lt BT_L LANG2  &lt NUM SPACE  &lt_to_layer_0 ARROW LANG1      &kp BACKSPACE  &lt SYMBOL ENTER                             &lt MOUSE ESC
             >;
 
