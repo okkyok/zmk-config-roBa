@@ -1,12 +1,13 @@
+#include <dt-bindings/zmk/mouse-gesture.h>
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/pointing.h>
-#include <dt-bindings/zmk/mouse-gesture.h>
 
 #define ZMK_POINTING_DEFAULT_SCRL_VAL 100
 
 // Layer index aliases
+
 #define BASE   0
 #define SYMBOL 1
 #define NUM    2
@@ -30,6 +31,7 @@
 
 &trackball {
     // Auto mouse layer is now driven by &zip_temp_layer (see roBa_R.overlay).
+
     scroll-layers = <SCROLL>;
 };
 
@@ -83,6 +85,7 @@
 
         // NOTE: 動画版の mul_mark / div_mark の実際の出力が不明のため、
         // テンキーの × (KP_MULTIPLY) / ÷ (KP_DIVIDE) を暫定割当。
+
         mul_mark: mul_mark {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
@@ -100,6 +103,7 @@
         // Force-exits the MOUSE auto layer on tap (see mt_exit_AML_on_tap below),
         // so typing can resume immediately instead of waiting for the
         // zip_temp_layer idle timeout.
+
         exit_AML: exit_AML {
             compatible = "zmk,behavior-macro";
             wait-ms = <0>;
@@ -176,10 +180,26 @@
         gesture-cooldown-ms = <120>;
 
         // Tab management
-        prev_tab  { pattern = <GESTURE_LEFT>;  bindings = <&kp LC(LS(TAB))>; };
-        next_tab  { pattern = <GESTURE_RIGHT>; bindings = <&kp LC(TAB)>;     };
-        new_tab   { pattern = <GESTURE_UP>;    bindings = <&kp LG(T)>;      };
-        close_tab { pattern = <GESTURE_DOWN>;  bindings = <&kp LG(W)>;       };
+
+        prev_tab {
+            pattern = <GESTURE_LEFT>;
+            bindings = <&kp LC(LS(TAB))>;
+        };
+
+        next_tab {
+            pattern = <GESTURE_RIGHT>;
+            bindings = <&kp LC(TAB)>;
+        };
+
+        new_tab {
+            pattern = <GESTURE_UP>;
+            bindings = <&kp LG(T)>;
+        };
+
+        close_tab {
+            pattern = <GESTURE_DOWN>;
+            bindings = <&kp LG(W)>;
+        };
     };
 
     zip_mouse_gesture_l8: zip_mouse_gesture_l8 {
@@ -195,10 +215,26 @@
 
         // Virtual desktop (Mission Control space) management
         // Left/right reversed to mimic trackpad-style natural swipe direction.
-        desk_prev    { pattern = <GESTURE_RIGHT>; bindings = <&kp LC(LEFT_ARROW)>;  };
-        desk_next    { pattern = <GESTURE_LEFT>;  bindings = <&kp LC(RIGHT_ARROW)>; };
-        mission_ctrl { pattern = <GESTURE_UP>;    bindings = <&kp LC(UP_ARROW)>;    };
-        app_expose   { pattern = <GESTURE_DOWN>;  bindings = <&kp LC(DOWN_ARROW)>;  };
+
+        desk_prev {
+            pattern = <GESTURE_RIGHT>;
+            bindings = <&kp LC(LEFT_ARROW)>;
+        };
+
+        desk_next {
+            pattern = <GESTURE_LEFT>;
+            bindings = <&kp LC(RIGHT_ARROW)>;
+        };
+
+        mission_ctrl {
+            pattern = <GESTURE_UP>;
+            bindings = <&kp LC(UP_ARROW)>;
+        };
+
+        app_expose {
+            pattern = <GESTURE_DOWN>;
+            bindings = <&kp LC(DOWN_ARROW)>;
+        };
     };
 
     zip_mouse_gesture_l9: zip_mouse_gesture_l9 {
@@ -213,10 +249,26 @@
         gesture-cooldown-ms = <120>;
 
         // App switching / quick actions
-        prev_app  { pattern = <GESTURE_LEFT>;  bindings = <&kp LG(LS(TAB))>; };
-        next_app  { pattern = <GESTURE_RIGHT>; bindings = <&kp LG(TAB)>;     };
-        focus_url { pattern = <GESTURE_UP>;    bindings = <&kp LG(L)>;       };
-        spotlight { pattern = <GESTURE_DOWN>;  bindings = <&kp LG(SPACE)>;   };
+
+        prev_app {
+            pattern = <GESTURE_LEFT>;
+            bindings = <&kp LG(LS(TAB))>;
+        };
+
+        next_app {
+            pattern = <GESTURE_RIGHT>;
+            bindings = <&kp LG(TAB)>;
+        };
+
+        focus_url {
+            pattern = <GESTURE_UP>;
+            bindings = <&kp LG(L)>;
+        };
+
+        spotlight {
+            pattern = <GESTURE_DOWN>;
+            bindings = <&kp LG(SPACE)>;
+        };
     };
 
     keymap {
@@ -224,10 +276,10 @@
 
         default_layer {
             bindings = <
-&kp Q             &kp W  &kp E     &kp R         &kp T                                                      &kp Y              &kp U        &kp I      &kp O    &lt SCROLL P
-&mt LCTRL A       &mt LS(LGUI) S  &mt LGUI D     &mt LALT F         &mt LCTRL G        &kp TAB                  &mt RC(RS(RA(RGUI))) SEMICOLON  &kp H              &mt RALT J        &mt RGUI K      &mt RS(RGUI) L    &lt L7 MINUS
-&mt_exit_AML_on_tap LEFT_SHIFT Z  &kp X  &kp C     &kp V         &kp B        &lt MOUSE LS(TAB)                  &kp RCTRL  &kp N          &kp M        &kp COMMA  &kp DOT  &mt LEFT_SHIFT SLASH
-&kp LGUI          &kp LALT  &kp LGUI  &lt BT_L LANG2  &lt NUM SPACE  &lt_to_layer_0 ARROW LANG1      &kp BACKSPACE  &lt SYMBOL ENTER                             &lt MOUSE ESC
+&kp Q                             &kp W           &kp E       &kp R           &kp T                                                                          &kp Y             &kp U       &kp I       &kp O           &lt SCROLL P
+&mt LCTRL A                       &mt LS(LGUI) S  &mt LGUI D  &mt LALT F      &mt LCTRL G    &kp TAB                         &mt RC(RS(RA(RGUI))) SEMICOLON  &kp H             &mt RALT J  &mt RGUI K  &mt RS(RGUI) L  &lt L7 MINUS
+&mt_exit_AML_on_tap LEFT_SHIFT Z  &kp X           &kp C       &kp V           &kp B          &lt MOUSE LS(TAB)               &kp RCTRL                       &kp N             &kp M       &kp COMMA   &kp DOT         &mt LEFT_SHIFT SLASH
+&kp LGUI                          &kp LALT        &kp LGUI    &lt BT_L LANG2  &lt NUM SPACE  &lt_to_layer_0 ARROW LANG1      &kp BACKSPACE                   &lt SYMBOL ENTER                                          &lt MOUSE ESC
             >;
 
             sensor-bindings = <&scroll_up_down>;
@@ -235,10 +287,10 @@
 
         symbol_layer {
             bindings = <
-&trans               &kp AMPERSAND    &kp ASTERISK  &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS                       &trans  &kp LEFT_BRACKET       &kp RIGHT_BRACKET      &trans         &kp AT_SIGN
-&kp EXCL             &kp DQT          &kp HASH      &kp DLLR              &kp PRCNT              &trans      &kp COLON  &kp AMPS  &kp SQT                &kp LPAR                &kp RPAR       &trans
-&kp AT_SIGN          &kp LESS_THAN    &kp LEFT_BRACE  &kp LEFT_BRACKET    &kp LEFT_PARENTHESIS   &trans      &trans  &kp RIGHT_PARENTHESIS  &kp RIGHT_BRACKET  &kp RIGHT_BRACE  &kp GREATER_THAN  &kp DOLLAR
-&trans               &trans           &trans        &trans                &trans                 &trans      &trans  &trans                                                                &trans
+&trans       &kp AMPERSAND  &kp ASTERISK    &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS                         &trans                 &kp LEFT_BRACKET   &kp RIGHT_BRACKET  &trans            &kp AT_SIGN
+&kp EXCL     &kp DQT        &kp HASH        &kp DLLR              &kp PRCNT              &trans      &kp COLON  &kp AMPS               &kp SQT            &kp LPAR           &kp RPAR          &trans
+&kp AT_SIGN  &kp LESS_THAN  &kp LEFT_BRACE  &kp LEFT_BRACKET      &kp LEFT_PARENTHESIS   &trans      &trans     &kp RIGHT_PARENTHESIS  &kp RIGHT_BRACKET  &kp RIGHT_BRACE    &kp GREATER_THAN  &kp DOLLAR
+&trans       &trans         &trans          &trans                &trans                 &trans      &trans     &trans                                                                         &trans
             >;
 
             sensor-bindings = <&scroll_right_left>;
@@ -246,10 +298,10 @@
 
         num_layer {
             bindings = <
-&kp F1        &kp F2     &kp F3     &kp F4     &kp F5                                             &kp SLASH   &kp EQUAL  &kp ASTERISK  &kp PLUS  &kp PERCENT
-&kp NUMBER_1        &kp NUMBER_2  &kp NUMBER_3  &kp NUMBER_4  &kp NUMBER_5      &trans                &mul_mark  &kp NUMBER_6      &kp NUMBER_7  &kp NUMBER_8  &kp NUMBER_9  &kp NUMBER_0
-&kp F6     &kp F7  &kp F8  &kp F9  &kp F10      &kp KP_MULTIPLY       &div_mark  &kp F11      &kp F12  &kp COMMA  &kp DOT  &kp DOLLAR
-&trans        &trans     &trans     &trans     &trans            &trans                &trans     &trans                             &trans
+&kp F1        &kp F2        &kp F3        &kp F4        &kp F5                                        &kp SLASH     &kp EQUAL     &kp ASTERISK  &kp PLUS      &kp PERCENT
+&kp NUMBER_1  &kp NUMBER_2  &kp NUMBER_3  &kp NUMBER_4  &kp NUMBER_5  &trans               &mul_mark  &kp NUMBER_6  &kp NUMBER_7  &kp NUMBER_8  &kp NUMBER_9  &kp NUMBER_0
+&kp F6        &kp F7        &kp F8        &kp F9        &kp F10       &kp KP_MULTIPLY      &div_mark  &kp F11       &kp F12       &kp COMMA     &kp DOT       &kp DOLLAR
+&trans        &trans        &trans        &trans        &trans        &trans               &trans     &trans                                                  &trans
             >;
 
             sensor-bindings = <&scroll_up_down>;
@@ -257,11 +309,12 @@
 
         arrow_layer {
             // 右手側はWindows用ショートカット(Win+矢印スナップ, PrintScreen系)。Mac利用時は要調整。
+
             bindings = <
-&kp PG_UP  &trans          &kp UP_ARROW    &trans           &kp PG_DN                                        &trans  &kp LC(LA(Y))               &kp LA(LC(UP_ARROW))  &kp LC(LA(U))             &trans
-&kp HOME   &kp LEFT_ARROW  &kp DOWN_ARROW  &kp RIGHT_ARROW  &kp END      &trans        &kp LC(LG(PRINTSCREEN))  &trans  &kp LA(LC(LEFT_ARROW))  &kp LA(LC(DOWN_ARROW))  &kp LA(LC(RIGHT_ARROW))  &trans
-&trans     &trans          &trans          &trans           &trans      &trans        &kp LS(PRINTSCREEN)      &trans  &kp LC(LA(H))               &kp LC(LA(J))             &trans             &trans
-&trans     &trans          &trans          &trans           &trans      &trans        &kp DELETE               &trans                                          &trans
+&kp PG_UP  &trans          &kp UP_ARROW    &trans           &kp PG_DN                                       &trans  &kp LC(LA(Y))           &kp LA(LC(UP_ARROW))    &kp LC(LA(U))            &trans
+&kp HOME   &kp LEFT_ARROW  &kp DOWN_ARROW  &kp RIGHT_ARROW  &kp END    &trans      &kp LC(LG(PRINTSCREEN))  &trans  &kp LA(LC(LEFT_ARROW))  &kp LA(LC(DOWN_ARROW))  &kp LA(LC(RIGHT_ARROW))  &trans
+&trans     &trans          &trans          &trans           &trans     &trans      &kp LS(PRINTSCREEN)      &trans  &kp LC(LA(H))           &kp RCTRL               &kp RA(RC(J))            &trans
+&trans     &trans          &trans          &trans           &trans     &trans      &kp DELETE               &trans                                                                           &trans
             >;
 
             sensor-bindings = <&inc_dec_kp LC(TAB) LC(LS(TAB))>;
@@ -269,10 +322,10 @@
 
         bt_layer {
             bindings = <
-&kp TAB  &trans  &trans  &trans  &trans                             &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4
-&kp LEFT_SHIFT  &trans  &trans  &trans  &trans      &trans         &trans  &trans        &kp LS(TAB)        &trans        &kp TAB        &trans
-&trans  &trans  &trans  &trans  &trans      &trans      &bootloader  &trans      &trans        &trans        &trans        &bt BT_CLR
-&trans  &trans  &kp LGUI  &trans  &trans      &trans      &trans       &kp LGUI                                                &bt BT_CLR_ALL
+&kp TAB         &trans  &trans    &trans  &trans                           &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4
+&kp LEFT_SHIFT  &trans  &trans    &trans  &trans  &trans      &trans       &trans        &kp LS(TAB)   &trans        &kp TAB       &trans
+&trans          &trans  &trans    &trans  &trans  &trans      &bootloader  &trans        &trans        &trans        &trans        &bt BT_CLR
+&trans          &trans  &kp LGUI  &trans  &trans  &trans      &trans       &kp LGUI                                                &bt BT_CLR_ALL
             >;
 
             sensor-bindings = <&scroll_up_down>;
@@ -280,10 +333,10 @@
 
         mouse_layer {
             bindings = <
-&trans  &trans  &trans  &trans  &trans                          &trans  &trans     &kp LG(V)  &kp LG(C)  &trans
-&trans  &trans  &trans  &trans  &trans      &trans      &trans  &trans  &mkp MB1   &mkp MB3   &mkp MB2   &trans
-&trans  &trans  &trans  &trans  &trans      &trans      &trans  &trans  &mkp MB4   &kp RIGHT_CONTROL     &mkp MB5   &trans
-&trans  &trans  &trans  &trans  &trans      &trans      &trans  &trans                                   &trans
+&trans  &trans  &trans  &trans  &trans                      &trans  &trans    &kp LG(V)          &kp LG(C)  &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &mkp MB1  &mkp MB3           &mkp MB2   &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &mkp MB4  &kp RIGHT_CONTROL  &mkp MB5   &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans                                          &trans
             >;
 
             sensor-bindings = <&scroll_up_down>;
@@ -291,10 +344,10 @@
 
         scroll_layer {
             bindings = <
-&trans  &trans  &trans  &trans  &trans                          &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans      &trans      &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans      &trans      &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans      &trans      &trans  &trans                          &trans
+&trans  &trans  &trans  &trans  &trans                      &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans                          &trans
             >;
 
             sensor-bindings = <&scroll_up_down>;
@@ -302,11 +355,12 @@
 
         Gesture_L7 {
             // Trackball gestures only; keys stay inert. See zip_mouse_gesture_l7.
+
             bindings = <
-&trans  &trans  &trans  &trans  &trans                          &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans      &trans      &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans      &trans      &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans      &trans      &trans  &trans                          &trans
+&trans  &trans  &trans  &trans  &trans                      &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans                          &trans
             >;
 
             sensor-bindings = <&scroll_up_down>;
@@ -314,11 +368,12 @@
 
         Gesture_L8 {
             // Trackball gestures only; keys stay inert. See zip_mouse_gesture_l8.
+
             bindings = <
-&trans  &trans  &trans  &trans  &trans                          &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans      &trans      &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans      &trans      &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans      &trans      &trans  &trans                          &trans
+&trans  &trans  &trans  &trans  &trans                      &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans                          &trans
             >;
 
             sensor-bindings = <&scroll_up_down>;
@@ -326,11 +381,12 @@
 
         Gesture_L9 {
             // Trackball gestures only; keys stay inert. See zip_mouse_gesture_l9.
+
             bindings = <
-&trans  &trans  &trans  &trans  &trans                          &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans      &trans      &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans      &trans      &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans      &trans      &trans  &trans                          &trans
+&trans  &trans  &trans  &trans  &trans                      &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans                          &trans
             >;
 
             sensor-bindings = <&scroll_up_down>;
