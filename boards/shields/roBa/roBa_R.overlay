@@ -54,7 +54,7 @@
         19 // K   (MB3)
         20 // L   (MB2)
         30 // M   (MB4)
-        31 // COMMA (mo NUM)
+        31 // COMMA (RIGHT_CONTROL)
         32 // DOT (MB5)
     >;
 };
