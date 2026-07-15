@@ -43,14 +43,18 @@
     };
 };
 
-// The mouse click positions on the MOUSE layer (J/K/L and M/DOT) keep the
-// layer alive; any other key press drops back out of the mouse layer.
+// Any key on the MOUSE layer that has a real binding (not &trans) keeps the
+// layer alive; pressing a &trans position drops back out of the mouse layer.
+// See mouse_layer bindings in roBa.keymap.
 &zip_temp_layer {
     excluded-positions = <
+        7  // I   (LG(C) copy)
+        8  // O   (LG(V) paste)
         18 // J   (MB1)
         19 // K   (MB3)
         20 // L   (MB2)
         30 // M   (MB4)
+        31 // COMMA (mo NUM)
         32 // DOT (MB5)
     >;
 };
