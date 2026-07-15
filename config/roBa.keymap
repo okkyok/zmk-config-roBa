@@ -311,9 +311,9 @@
             // 右手側はWindows用ショートカット(Win+矢印スナップ, PrintScreen系)。Mac利用時は要調整。
 
             bindings = <
-&kp PG_UP  &trans          &kp UP_ARROW    &trans           &kp PG_DN                                       &trans  &kp LC(LA(Y))           &kp LA(LC(UP_ARROW))    &kp LC(LA(U))            &trans
+&kp PG_UP  &kp PG_UP       &kp UP_ARROW    &kp PAGE_DOWN    &kp PG_DN                                       &trans  &kp LC(LA(Y))           &kp LA(LC(UP_ARROW))    &kp LC(LA(U))            &trans
 &kp HOME   &kp LEFT_ARROW  &kp DOWN_ARROW  &kp RIGHT_ARROW  &kp END    &trans      &kp LC(LG(PRINTSCREEN))  &trans  &kp LA(LC(LEFT_ARROW))  &kp LA(LC(DOWN_ARROW))  &kp LA(LC(RIGHT_ARROW))  &trans
-&trans     &trans          &trans          &trans           &trans     &trans      &kp LS(PRINTSCREEN)      &trans  &kp LC(LA(H))           &kp RCTRL               &kp RA(RC(J))            &trans
+&trans     &kp LGUI        &kp LS(TAB)     &kt TAB          &trans     &trans      &kp LS(PRINTSCREEN)      &trans  &kp LC(LA(H))           &kp RCTRL               &kp RA(RC(J))            &trans
 &trans     &trans          &trans          &trans           &trans     &trans      &kp DELETE               &trans                                                                           &trans
             >;
 
