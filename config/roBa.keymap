@@ -287,9 +287,9 @@
 
         symbol_layer {
             bindings = <
-&trans       &kp AMPERSAND  &kp ASTERISK    &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS                         &kp CARET              &kp LEFT_BRACKET   &kp RIGHT_BRACKET  &trans            &kp AT_SIGN
-&kp EXCL     &kp DQT        &kp HASH        &kp DLLR              &kp PRCNT              &trans      &kp COLON  &kp AMPS               &kp SQT            &kp LPAR           &kp RPAR          &trans
-&kp AT_SIGN  &kp LESS_THAN  &kp LEFT_BRACE  &kp LEFT_BRACKET      &kp LEFT_PARENTHESIS   &trans      &trans     &kp RIGHT_PARENTHESIS  &kp RIGHT_BRACKET  &kp RIGHT_BRACE    &kp GREATER_THAN  &kp DOLLAR
+&trans       &kp AMPERSAND  &kp ASTERISK    &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS                         &kp CARET              &kp CARET          &kp LEFT_BRACKET  &kp RIGHT_BRACKET  &kp AT_SIGN
+&kp EXCL     &kp DQT        &kp HASH        &kp DLLR              &kp PRCNT              &trans      &kp COLON  &kp AMPS               &kp SQT            &kp LPAR          &kp RPAR           &kp TILDE
+&kp AT_SIGN  &kp LESS_THAN  &kp LEFT_BRACE  &kp LEFT_BRACKET      &kp LEFT_PARENTHESIS   &trans      &trans     &kp RIGHT_PARENTHESIS  &kp RIGHT_BRACKET  &kp RIGHT_BRACE   &kp GREATER_THAN   &kp DOLLAR
 &trans       &trans         &trans          &trans                &trans                 &trans      &trans     &trans                                                                         &trans
             >;
 
