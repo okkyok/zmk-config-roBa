@@ -235,7 +235,7 @@
         symbol_layer {
             bindings = <
 &trans               &kp AMPERSAND    &kp ASTERISK  &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS                       &trans  &kp LEFT_BRACKET       &kp RIGHT_BRACKET      &trans         &trans
-&kp GRAVE            &kp DOLLAR       &kp PERCENT   &kp CARET             &trans                 &trans      &trans  &trans  &kp LEFT_PARENTHESIS   &kp RIGHT_PARENTHESIS  &kp BACKSLASH  &trans
+&kp EXCL             &kp DQT          &kp HASH      &kp DLLR              &kp PRCNT              &trans      &trans  &kp AMPS  &kp SQT                &kp LPAR                &kp RPAR       &trans
 &mt LEFT_SHIFT MINUS &kp EXCLAMATION  &kp AT_SIGN   &kp HASH              &trans                 &trans      &trans  &trans  &kp LEFT_BRACE         &kp RIGHT_BRACE        &kp PIPE       &trans
 &trans               &trans           &trans        &trans                &trans                 &trans      &trans  &trans                                                                &trans
             >;
