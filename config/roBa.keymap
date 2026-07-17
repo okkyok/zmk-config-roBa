@@ -23,9 +23,11 @@
     flavor = "balanced";
 
     // 起点は1回目の「押下」なので、押している時間も窓に含まれる。&lt と揃えて 300。
+
     quick-tap-ms = <300>;
 
     // 直前に別キーを打っていれば即タップに倒す。連続入力中の判定待ちを無くす。
+
     require-prior-idle-ms = <150>;
 };
 
@@ -303,7 +305,7 @@
 
         num_layer {
             bindings = <
-&kp EQUAL     &kp SLASH     &kp STAR      &kp MINUS     &kp PLUS                                      &kp SLASH     &kp EQUAL     &kp ASTERISK  &kp PLUS      &kp PERCENT
+&kp EQUAL     &kp SLASH     &kp STAR      &kp MINUS     &kp PLUS                                      &kp PERCENT   &kp DOLLAR    &kp ASTERISK  &kp PLUS      &kp PERCENT
 &kp NUMBER_1  &kp NUMBER_2  &kp NUMBER_3  &kp NUMBER_4  &kp NUMBER_5  &trans               &mul_mark  &kp NUMBER_6  &kp NUMBER_7  &kp NUMBER_8  &kp NUMBER_9  &kp NUMBER_0
 &kp NUMBER_6  &kp NUMBER_7  &kp NUMBER_8  &kp NUMBER_9  &kp NUMBER_0  &kp KP_MULTIPLY      &div_mark  &kp F11       &kp F12       &kp COMMA     &kp DOT       &kp DOLLAR
 &trans        &trans        &trans        &trans        &trans        &trans               &trans     &trans                                                  &trans
@@ -318,7 +320,7 @@
             bindings = <
 &kp PG_UP  &kp PG_UP       &kp UP_ARROW    &kp PAGE_DOWN    &kp PG_DN                                       &trans  &kp LC(LA(Y))           &kp LA(LC(UP_ARROW))    &kp LC(LA(U))            &trans
 &kp HOME   &kp LEFT_ARROW  &kp DOWN_ARROW  &kp RIGHT_ARROW  &kp END    &trans      &kp LC(LG(PRINTSCREEN))  &trans  &kp LA(LC(LEFT_ARROW))  &kp LA(LC(DOWN_ARROW))  &kp LA(LC(RIGHT_ARROW))  &trans
-&trans     &kp LGUI        &kp LS(TAB)     &kt TAB          &trans     &trans      &kp LS(PRINTSCREEN)      &trans  &kp LC(LA(H))           &kp RCTRL               &kp RA(RC(J))            &trans
+&trans     &kp LGUI        &kp LS(TAB)     &kt TAB          &trans     &trans      &kp LS(PRINTSCREEN)      &trans  &kp LC(LA(H))           &kp RC(N)               &kp RA(RC(J))            &trans
 &trans     &trans          &trans          &trans           &trans     &trans      &kp DELETE               &trans                                                                           &trans
             >;
 
@@ -338,10 +340,10 @@
 
         mouse_layer {
             bindings = <
-&trans  &trans  &trans  &trans  &trans                      &trans  &trans    &kp LG(V)          &kp LG(C)  &trans
-&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &mkp MB1  &mkp MB3           &mkp MB2   &trans
-&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &mkp MB4  &kp RIGHT_CONTROL  &mkp MB5   &trans
-&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans                                          &trans
+&trans  &trans  &trans  &trans  &trans                      &trans  &trans    &kp LG(V)  &kp LG(C)  &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &mkp MB1  &mkp MB3   &mkp MB2   &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &mkp MB4  &kp RC(N)  &mkp MB5   &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans                                  &trans
             >;
 
             sensor-bindings = <&scroll_up_down>;
