@@ -305,10 +305,10 @@
 
         num_layer {
             bindings = <
-&kp EQUAL     &kp SLASH     &kp STAR      &kp MINUS     &kp PLUS                                      &kp PERCENT   &kp DOLLAR    &kp ASTERISK  &kp PLUS      &kp PERCENT
-&kp NUMBER_1  &kp NUMBER_2  &kp NUMBER_3  &kp NUMBER_4  &kp NUMBER_5  &trans               &mul_mark  &kp NUMBER_6  &kp NUMBER_7  &kp NUMBER_8  &kp NUMBER_9  &kp NUMBER_0
-&kp NUMBER_6  &kp NUMBER_7  &kp NUMBER_8  &kp NUMBER_9  &kp NUMBER_0  &kp KP_MULTIPLY      &div_mark  &kp F11       &kp F12       &kp COMMA     &kp DOT       &kp DOLLAR
-&trans        &trans        &trans        &trans        &trans        &trans               &trans     &trans                                                  &trans
+&kp EQUAL           &kp SLASH     &kp STAR      &kp MINUS     &kp PLUS                                      &kp PERCENT   &kp DOLLAR    &kp ASTERISK  &kp PLUS      &kp PERCENT
+&mt LCTRL NUMBER_1  &kp NUMBER_2  &kp NUMBER_3  &kp NUMBER_4  &kp NUMBER_5  &trans               &mul_mark  &kp NUMBER_6  &kp NUMBER_7  &kp NUMBER_8  &kp NUMBER_9  &mt RCTRL NUMBER_0
+&mt LSHFT NUMBER_6  &kp NUMBER_7  &kp NUMBER_8  &kp NUMBER_9  &kp NUMBER_0  &kp KP_MULTIPLY      &div_mark  &kp F11       &kp F12       &kp COMMA     &kp DOT       &mt RSHIFT DOLLAR
+&trans              &trans        &trans        &trans        &trans        &trans               &trans     &trans                                                  &trans
             >;
 
             sensor-bindings = <&scroll_up_down>;
