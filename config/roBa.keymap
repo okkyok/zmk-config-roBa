@@ -294,10 +294,10 @@
 
         symbol_layer {
             bindings = <
-&trans    &kp AMPERSAND  &kp ASTERISK  &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS                         &kp CARET  &kp CARET  &kp LEFT_BRACKET  &kp RIGHT_BRACKET  &kp AT_SIGN
-&kp EXCL  &kp DQT        &kp HASH      &kp DLLR              &kp PRCNT              &trans      &kp COLON  &kp AMPS   &kp SQT    &kp LPAR          &kp RPAR           &kp TILDE
-&kp F1    &kp F2         &kp F3        &kp F4                &kp F5                 &trans      &trans     &kp F6     &kp F7     &kp F8            &kp F9             &kp F10
-&trans    &trans         &trans        &trans                &trans                 &trans      &trans     &trans                                                     &trans
+&trans    &kp AMPERSAND  &kp ASTERISK  &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS                         &kp CARET       &kp CARET        &kp LEFT_BRACKET  &kp RIGHT_BRACKET  &kp AT_SIGN
+&kp EXCL  &kp DQT        &kp HASH      &kp DLLR              &kp PRCNT              &trans      &kp COLON  &kp LEFT_BRACE  &kp RIGHT_BRACE  &kp LPAR          &kp RPAR           &kp TILDE
+&kp F1    &kp F2         &kp F3        &kp F4                &kp F5                 &trans      &trans     &kp F6          &kp F7           &kp F8            &kp F9             &kp F10
+&trans    &trans         &trans        &trans                &trans                 &trans      &trans     &trans                                                                &trans
             >;
 
             sensor-bindings = <&scroll_right_left>;
