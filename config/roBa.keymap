@@ -42,6 +42,15 @@
     scroll-layers = <SCROLL>;
 };
 
+// A click is the end of a mouse interaction, so drop AML 300ms after any mouse
+// button event. This removes the need to remember to press an exit key before
+// typing again. Reuses the single &zip_temp_layer instance with a shorter TTL
+// (multiple instances of that processor do not compile - zmk#3282).
+
+&mkp_input_listener {
+    input-processors = <&zip_temp_layer MOUSE 300>;
+};
+
 / {
     combos {
         compatible = "zmk,combos";
@@ -69,6 +78,17 @@
         eq {
             bindings = <&kp EQUAL>;
             key-positions = <24 25>;
+        };
+
+        // Paste used to sit on I alone, which is a top-frequency romaji key and
+        // pasted into the document on every AML misfire. U+I on the MOUSE layer
+        // only. Both positions must be in excluded-positions (roBa_R.overlay)
+        // or temp_layer drops the layer before the combo is evaluated.
+
+        mouse_paste {
+            bindings = <&kp LG(V)>;
+            key-positions = <6 7>;
+            layers = <MOUSE>;
         };
 
         gesture_l8 {
@@ -357,7 +377,7 @@
 
         mouse_layer {
             bindings = <
-&trans  &trans  &trans  &trans  &trans                      &trans  &trans    &kp LG(V)  &kp LG(C)  &trans
+&trans  &trans  &trans  &trans  &trans                      &trans  &trans    &trans     &kp LG(C)  &trans
 &trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &mkp MB1  &mkp MB3   &mkp MB2   &trans
 &trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &mkp MB4  &kp RC(N)  &mkp MB5   &trans
 &trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans                                  &trans
