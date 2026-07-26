@@ -163,6 +163,23 @@
             toggle-mode = "off";
         };
 
+        // 直前の打鍵に関係なくモッドを即座に成立させる mod-tap。
+        // 入力直後の Ctrl+H / Ctrl+L を確実に通すため、&mt と違って
+        // require-prior-idle-ms と quick-tap-ms を無効にしてある。
+        // (どちらも「タップに倒す」救済策で、モッド起点キーでは誤爆源になる)
+
+        hm_instant: hm_instant {
+            compatible = "zmk,behavior-hold-tap";
+            label = "HM_INSTANT";
+            bindings = <&kp>, <&kp>;
+
+            #binding-cells = <2>;
+            tapping-term-ms = <200>;
+            flavor = "balanced";
+            quick-tap-ms = <0>;
+            require-prior-idle-ms = <0>;
+        };
+
         mt_exit_AML_on_tap: mt_exit_AML_on_tap {
             compatible = "zmk,behavior-hold-tap";
             label = "MT_exit_AML_ON_TAP";
@@ -284,7 +301,7 @@
         default_layer {
             bindings = <
 &kp Q                             &kp W                   &kp E       &kp R           &kp T                                                                          &kp Y             &kp U       &kp I       &kp O           &lt SCROLL P
-&mt LCTRL A                       &mt LS(LEFT_COMMAND) S  &mt LGUI D  &mt LALT F      &mt LCTRL G    &kp TAB                         &mt RC(RS(RA(RGUI))) SEMICOLON  &kp H             &mt RALT J  &mt RGUI K  &mt RS(RGUI) L  &mt RCTRL MINUS
+&hm_instant LCTRL A               &mt LS(LEFT_COMMAND) S  &mt LGUI D  &mt LALT F      &mt LCTRL G    &kp TAB                         &mt RC(RS(RA(RGUI))) SEMICOLON  &kp H             &mt RALT J  &mt RGUI K  &mt RS(RGUI) L  &mt RCTRL MINUS
 &mt_exit_AML_on_tap LEFT_SHIFT Z  &mt LEFT_SHIFT X        &kp C       &kp V           &kp B          &lt MOUSE LS(TAB)               &kp RCTRL                       &kp N             &kp M       &kp COMMA   &kp DOT         &mt LEFT_SHIFT SLASH
 &kp LGUI                          &kp LALT                &kp LGUI    &lt BT_L LANG2  &lt NUM SPACE  &lt_to_layer_0 ARROW LANG1      &kp BACKSPACE                   &lt SYMBOL ENTER                                          &lt MOUSE ESC
             >;
