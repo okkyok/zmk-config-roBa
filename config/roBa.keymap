@@ -192,10 +192,12 @@
             toggle-mode = "off";
         };
 
-        // 直前の打鍵に関係なくモッドを即座に成立させる mod-tap。
-        // 入力直後の Ctrl+H / Ctrl+L を確実に通すため、&mt と違って
-        // require-prior-idle-ms と quick-tap-ms を無効にしてある。
-        // (どちらも「タップに倒す」救済策で、モッド起点キーでは誤爆源になる)
+        // Aは最高頻度キーのため、左手内だけで完結する通常のロールオーバー
+        // 打鍵(a+s 等)がそのままholdに誤判定されないようにする。
+        // require-prior-idle-msは他の&mt(150ms)より短い80msに留め、直後の
+        // Ctrl+A系コンボの反応性を優先しつつ、hold-trigger-key-positionsで
+        // 右手側キーのみをhold判定のトリガーに限定することで、左手だけの
+        // ロールオーバーはtapping-term-ms経過まで待つ(誤爆しにくい)。
 
         hm_instant: hm_instant {
             compatible = "zmk,behavior-hold-tap";
@@ -206,7 +208,8 @@
             tapping-term-ms = <200>;
             flavor = "balanced";
             quick-tap-ms = <0>;
-            require-prior-idle-ms = <0>;
+            require-prior-idle-ms = <80>;
+            hold-trigger-key-positions = <5 6 7 8 9 16 17 18 19 20 21 28 29 30 31 32 33 40 41 42>;
         };
 
         mt_exit_AML_on_tap: mt_exit_AML_on_tap {
