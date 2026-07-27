@@ -54,6 +54,7 @@
         6  // U   (&trans; half of the U+I paste combo)
         7  // I   (&trans; half of the U+I paste combo)
         8  // O   (LG(C) copy)
+        9  // P   (&trans; half of the O+P gesture combo)
         18 // J   (MB1)
         19 // K   (MB3)
         20 // L   (MB2)
