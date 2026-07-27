@@ -218,20 +218,14 @@
             bindings = <&kp>, <&kp_exit_AML>;
 
             #binding-cells = <2>;
+            tapping-term-ms = <250>;
 
-            // tap-preferredはZ自体の押下継続時間だけを見るので、間を置いた
-            // 直後の一打(require-prior-idle-msの保護が効かない場面)では
-            // この値が唯一の防波堤になる。250msでは誤爆が残ったため350msへ。
-            // 副作用として、意図的なShift長押しの成立がその分遅くなる。
-
-            tapping-term-ms = <350>;
-
-            // holdはkp_exit_AMLマクロ(wait-ms/tap-ms=0)でShiftを一瞬タップして
-            // exit_AMLを実行するだけで、他キーとのチョード用に保持されるわけ
-            // ではない。よってbalancedで他キーの押下有無を見る必要がなく、
-            // tap-preferredにしてZ自体をtapping-term以上押し続けた場合のみ
-            // holdに倒す。これによりSpace等とのロールオーバーで誤ってShift
-            // タップが送出され、IMEの変換状態を誤爆させる問題を防ぐ。
+            // hold = &kp LEFT_SHIFT (Shift+矢印等のチョードに使う)、
+            // tap = &kp_exit_AML Z (Zを打ってMOUSE層を抜ける)。
+            // tap-preferredにより、他キーの押下有無ではなくZ自体を
+            // tapping-term以上押し続けた場合のみholdに倒す。Space等との
+            // ロールオーバーで誤ってShiftが成立し、Shift+Spaceが送出されて
+            // IMEの変換状態を誤爆させる問題を防ぐ。
 
             flavor = "tap-preferred";
             quick-tap-ms = <200>;
