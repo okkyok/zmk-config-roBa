@@ -216,13 +216,16 @@
 
             #binding-cells = <2>;
             tapping-term-ms = <250>;
-            flavor = "balanced";
+
+            // holdはkp_exit_AMLマクロ(wait-ms/tap-ms=0)でShiftを一瞬タップして
+            // exit_AMLを実行するだけで、他キーとのチョード用に保持されるわけ
+            // ではない。よってbalancedで他キーの押下有無を見る必要がなく、
+            // tap-preferredにしてZ自体をtapping-term以上押し続けた場合のみ
+            // holdに倒す。これによりSpace等とのロールオーバーで誤ってShift
+            // タップが送出され、IMEの変換状態を誤爆させる問題を防ぐ。
+
+            flavor = "tap-preferred";
             quick-tap-ms = <200>;
-
-            // &mt と同様、直前打鍵から150ms以内なら即タップに倒す。
-            // Z(LEFT_SHIFT)がスペースとのロールオーバーでholdに誤判定され、
-            // Shift+Spaceが送出されてIMEの変換状態を誤爆させる対策。
-
             require-prior-idle-ms = <150>;
         };
 
