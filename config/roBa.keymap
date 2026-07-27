@@ -135,28 +135,6 @@
             bindings = <&kp KP_DIVIDE>;
             label = "DIV_MARK";
         };
-
-        // Force-exits the MOUSE auto layer on tap (see mt_exit_AML_on_tap below),
-        // so typing can resume immediately instead of waiting for the
-        // zip_temp_layer idle timeout.
-
-        exit_AML: exit_AML {
-            compatible = "zmk,behavior-macro";
-            wait-ms = <0>;
-            tap-ms = <0>;
-            #binding-cells = <0>;
-            bindings = <&tog_off MOUSE>;
-            label = "exit_AML";
-        };
-
-        kp_exit_AML: kp_exit_AML {
-            compatible = "zmk,behavior-macro-one-param";
-            wait-ms = <0>;
-            tap-ms = <0>;
-            #binding-cells = <1>;
-            bindings = <&macro_param_1to1 &kp MACRO_PLACEHOLDER &exit_AML>;
-            label = "KP_exit_AML";
-        };
     };
 
     behaviors {
@@ -185,13 +163,6 @@
             tap-ms = <20>;
         };
 
-        tog_off: toggle_layer_off {
-            compatible = "zmk,behavior-toggle-layer";
-            #binding-cells = <1>;
-            display-name = "Toggle Layer Off";
-            toggle-mode = "off";
-        };
-
         // Aは最高頻度キーのため、左手内だけで完結する通常のロールオーバー
         // 打鍵(a+s 等)がそのままholdに誤判定されないようにする。
         // require-prior-idle-msは他の&mt(150ms)より短い80msに留め、直後の
@@ -210,26 +181,6 @@
             quick-tap-ms = <0>;
             require-prior-idle-ms = <80>;
             hold-trigger-key-positions = <5 6 7 8 9 16 17 18 19 20 21 28 29 30 31 32 33 40 41 42>;
-        };
-
-        mt_exit_AML_on_tap: mt_exit_AML_on_tap {
-            compatible = "zmk,behavior-hold-tap";
-            label = "MT_exit_AML_ON_TAP";
-            bindings = <&kp>, <&kp_exit_AML>;
-
-            #binding-cells = <2>;
-            tapping-term-ms = <250>;
-
-            // hold = &kp LEFT_SHIFT (Shift+矢印等のチョードに使う)、
-            // tap = &kp_exit_AML Z (Zを打ってMOUSE層を抜ける)。
-            // tap-preferredにより、他キーの押下有無ではなくZ自体を
-            // tapping-term以上押し続けた場合のみholdに倒す。Space等との
-            // ロールオーバーで誤ってShiftが成立し、Shift+Spaceが送出されて
-            // IMEの変換状態を誤爆させる問題を防ぐ。
-
-            flavor = "tap-preferred";
-            quick-tap-ms = <200>;
-            require-prior-idle-ms = <150>;
         };
 
         // &lt と同じ設定に require-prior-idle-ms を追加した layer-tap。
@@ -361,7 +312,7 @@
             bindings = <
 &kp Q                             &kp W                   &kp E       &kp R           &kp T                                                                          &kp Y             &kp U       &kp I       &kp O           &lt_instant_tap SCROLL P
 &hm_instant LCTRL A               &mt LS(LEFT_COMMAND) S  &mt LGUI D  &mt LALT F      &mt LCTRL G    &kp TAB                         &mt RC(RS(RA(RGUI))) SEMICOLON  &kp H             &mt RALT J  &mt RGUI K  &mt RS(RGUI) L  &mt RCTRL MINUS
-&mt_exit_AML_on_tap LEFT_SHIFT Z  &mt LEFT_SHIFT X        &kp C       &kp V           &kp B          &lt MOUSE LS(TAB)               &kp RS(RA(RC(RGUI)))            &kp N             &kp M       &kp COMMA   &kp DOT         &mt LEFT_SHIFT SLASH
+&mt LEFT_SHIFT Z                  &mt LEFT_SHIFT X        &kp C       &kp V           &kp B          &lt MOUSE LS(TAB)               &kp RS(RA(RC(RGUI)))            &kp N             &kp M       &kp COMMA   &kp DOT         &mt LEFT_SHIFT SLASH
 &kp LGUI                          &kp LALT                &kp LGUI    &lt BT_L LANG2  &lt NUM SPACE  &lt_to_layer_0 ARROW LANG1      &kp BACKSPACE                   &lt SYMBOL ENTER                                          &lt MOUSE ESC
             >;
 
