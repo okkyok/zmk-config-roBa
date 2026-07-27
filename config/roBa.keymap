@@ -94,14 +94,20 @@
             layers = <MOUSE>;
         };
 
+        // O+P は「ぽ」等の高頻度ロールオーバーで誤爆する(U+Iのpasteコンボと
+        // 同じ問題)。mouse_pasteと同様にMOUSE層のみに限定する。
+        // K+Lも同じ理由で限定。
+
         gesture_l8 {
             bindings = <&mo L8>;
             key-positions = <8 9>;
+            layers = <MOUSE>;
         };
 
         gesture_l9 {
             bindings = <&mo L9>;
             key-positions = <19 20>;
+            layers = <MOUSE>;
         };
     };
 
