@@ -212,6 +212,12 @@
             tapping-term-ms = <250>;
             flavor = "balanced";
             quick-tap-ms = <200>;
+
+            // &mt と同様、直前打鍵から150ms以内なら即タップに倒す。
+            // Z(LEFT_SHIFT)がスペースとのロールオーバーでholdに誤判定され、
+            // Shift+Spaceが送出されてIMEの変換状態を誤爆させる対策。
+
+            require-prior-idle-ms = <150>;
         };
 
         // &lt と同じ設定に require-prior-idle-ms を追加した layer-tap。
