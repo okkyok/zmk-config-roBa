@@ -32,9 +32,8 @@
     quick-tap-ms = <300>;
 
     // 直前に別キーを打っていれば即タップに倒す。連続入力中の判定待ちを無くす。
-    // 150msでは単語の切れ目など打鍵間隔が開いた場面をすり抜けて誤爆したため170msへ。
 
-    require-prior-idle-ms = <170>;
+    require-prior-idle-ms = <150>;
 };
 
 &lt {
@@ -165,7 +164,7 @@
         };
 
         // Aは最高頻度キーのため、連続入力中のロールオーバー打鍵がholdに
-        // 誤判定されないよう、require-prior-idle-msを&mtと同じ170msにする。
+        // 誤判定されないよう、require-prior-idle-msを&mtと同じ150msにする。
         // &mtとの違いはquick-tap-msのみ: タップ直後に同じキーを押し直して
         // Ctrlとして使う場面をタップに倒されたくないため0で無効にしてある。
 
@@ -178,7 +177,7 @@
             tapping-term-ms = <200>;
             flavor = "balanced";
             quick-tap-ms = <0>;
-            require-prior-idle-ms = <170>;
+            require-prior-idle-ms = <150>;
         };
 
         // &lt と同じ設定に require-prior-idle-ms を追加した layer-tap。
