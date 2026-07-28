@@ -200,15 +200,18 @@
         // A押下」を押した瞬間にタップ確定させるため、タイピング中にミスへ気づいて
         // 即 A長押し+H(Ctrl+H)で消す操作が「(a)h」の文字入力に化けていた。
         // prior-idleをやめ、代わりに2段構えでロールオーバーを守る:
-        //  - hold-trigger-key-positions=<17>(H): H以外のキーが割り込んだら即タップ
-        //    確定。保護範囲は従来同等で、判定時点がA押下時→相手キー押下時になる
-        //    だけ(aの文字は次キーと同時に出る)。
-        //  - tap-preferred: A+Hの組でも200ms以内にAを離せばタップ。「あは/あひ/
-        //    あほ/〜aは」等のa→h巻き込みでCtrl+H(=無言の1文字削除)が誤発しない。
-        // Ctrl+HはAを200ms(tapping-term)以上押し続けたときだけ発動し、term前に
-        // 押したHもキュー再生されるので取りこぼさない。H以外とのCtrl組み合わせは
-        // Aを200ms長押ししてhold確定後に相手キーを押せば従来どおり。
-        // quick-tap-msはタップ直後の押し直しをCtrlとして使うため0のまま。
+        //  - hold-trigger-key-positions=<17 19 20>(H/K/L): タイピング中に多用する
+        //    Ctrl+H(1文字削除)・Ctrl+K(カタカナ変換)・Ctrl+L(英数変換)だけhold候補
+        //    に残し、それ以外のキーが割り込んだら即タップ確定。保護範囲は従来同等
+        //    で、判定時点がA押下時→相手キー押下時になるだけ(aの文字は次キーと
+        //    同時に出る)。
+        //  - tap-preferred: H/K/Lとの組でも200ms以内にAを離せばタップ。「あは/
+        //    あか/あき/〜aは」等のa→h,k,l巻き込みでCtrl+H(=無言の1文字削除)や
+        //    Ctrl+K(=意図しないカタカナ変換)が誤発しない。
+        // Ctrl+H/K/LはAを200ms(tapping-term)以上押し続けたときだけ発動し、term前
+        // に押した相手キーもキュー再生されるので取りこぼさない。リスト外キーとの
+        // Ctrl組み合わせはAを200ms長押ししてhold確定後に相手キーを押せば従来
+        // どおり。quick-tap-msはタップ直後の押し直しをCtrlとして使うため0のまま。
 
         hm_instant: hm_instant {
             compatible = "zmk,behavior-hold-tap";
@@ -219,7 +222,7 @@
             tapping-term-ms = <200>;
             flavor = "tap-preferred";
             quick-tap-ms = <0>;
-            hold-trigger-key-positions = <17>;
+            hold-trigger-key-positions = <17 19 20>;
         };
 
         // &lt と同じ設定に require-prior-idle-ms を追加した layer-tap。
