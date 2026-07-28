@@ -110,19 +110,22 @@
         };
 
         // O+P は「ぽ」等の高頻度ロールオーバーで誤爆する(U+Iのpasteコンボと
-        // 同じ問題)。mouse_pasteと同様にMOUSE層のみに限定する。
-        // K+Lも同じ理由で限定。
+        // 同じ問題)。一時はMOUSE層限定にしたが、ボールに触れる前に
+        // O+Pを押すジェスチャー手順が塞がれ、BASE層で素のOがキーリピート
+        // してしまった。全レイヤーに戻し、代わりに require-prior-idle-ms で
+        // 「直前150ms以内に打鍵があれば発火しない」ようにしてタイピング中の
+        // 誤爆を防ぐ。K+Lも同様。
 
         gesture_l8 {
             bindings = <&mo L8>;
             key-positions = <8 9>;
-            layers = <MOUSE>;
+            require-prior-idle-ms = <150>;
         };
 
         gesture_l9 {
             bindings = <&mo L9>;
             key-positions = <19 20>;
-            layers = <MOUSE>;
+            require-prior-idle-ms = <150>;
         };
     };
 
