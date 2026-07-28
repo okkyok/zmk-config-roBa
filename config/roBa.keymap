@@ -95,6 +95,20 @@
             layers = <MOUSE>;
         };
 
+        // 全角入力中に半角スペースを打つ「zを押しながらスペース」用。
+        // Zのhold-tapはロールオーバー対策(require-prior-idle等)がすべて
+        // タップに倒す方向のため、素早いz+スペースでは文字zが変換に入って
+        // しまう。タイミングでは判別できないが相手キーがスペースであれば
+        // 半角スペース意図と確定できるので、コンボでShift+Spaceを
+        // アトミックに送出する。IME側のShift+Space=半角スペース設定が前提。
+
+        half_space {
+            bindings = <&kp LS(SPACE)>;
+            key-positions = <22 38>;
+            timeout-ms = <100>;
+            layers = <BASE>;
+        };
+
         // O+P は「ぽ」等の高頻度ロールオーバーで誤爆する(U+Iのpasteコンボと
         // 同じ問題)。mouse_pasteと同様にMOUSE層のみに限定する。
         // K+Lも同じ理由で限定。
