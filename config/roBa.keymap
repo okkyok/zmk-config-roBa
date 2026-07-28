@@ -245,6 +245,31 @@
             tapping-term-ms = <200>;
             flavor = "tap-preferred";
         };
+
+        // BT_L層でA(=LCTRL)を押している間だけ S→Q / D→W に化けるmod-morph。
+        // keep-modsでCtrlを保持したまま送るので、OSには Ctrl+Q / Ctrl+W が
+        // 届く(左手だけで完結するショートカット用)。Ctrl非押下時は
+        // BT_L層の従来割り当て(S=LGUI, D=Shift+Tab)のまま。
+
+        mm_bt_s_q: mm_bt_s_q {
+            compatible = "zmk,behavior-mod-morph";
+            label = "MM_BT_S_Q";
+            #binding-cells = <0>;
+            bindings = <&kp LGUI>, <&kp Q>;
+
+            mods = <(MOD_LCTL)>;
+            keep-mods = <(MOD_LCTL)>;
+        };
+
+        mm_bt_d_w: mm_bt_d_w {
+            compatible = "zmk,behavior-mod-morph";
+            label = "MM_BT_D_W";
+            #binding-cells = <0>;
+            bindings = <&kp LS(TAB)>, <&kp W>;
+
+            mods = <(MOD_LCTL)>;
+            keep-mods = <(MOD_LCTL)>;
+        };
     };
 
     zip_mouse_gesture_l7: zip_mouse_gesture_l7 {
@@ -402,7 +427,7 @@
         bt_layer {
             bindings = <
 &trans  &trans    &trans       &trans   &trans                           &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4
-&trans  &kp LGUI  &kp LS(TAB)  &kp TAB  &trans  &trans      &trans       &trans        &kp LS(TAB)   &trans        &kp TAB       &trans
+&kp LCTRL  &mm_bt_s_q  &mm_bt_d_w  &kp TAB  &trans  &trans      &trans       &trans        &kp LS(TAB)   &trans        &kp TAB       &trans
 &trans  &trans    &trans       &trans   &trans  &trans      &bootloader  &trans        &trans        &trans        &trans        &bt BT_CLR
 &trans  &trans    &trans       &trans   &trans  &trans      &trans       &kp LGUI                                                &bt BT_CLR_ALL
             >;
