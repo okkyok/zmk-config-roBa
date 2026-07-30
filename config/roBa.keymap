@@ -114,13 +114,16 @@
         // 待つため、素早くロールして先にZを離すと「zp」に化ける。flavorを
         // hold-preferredにするとリスト内の全キーが押下即Shiftになり副作用が
         // 大きいので、Pだけコンボでアトミックに送出する。ローマ字に「zp」は
-        // 現れないため誤爆の余地がない。Zを先に押し込んでから100ms以降にPを
-        // 押す使い方は従来どおり hm_shift_z のhold側が受け持つ。
+        // 現れないため誤爆の余地がない。
+        // timeout-msは必ずtapping-term-ms(200)と同値にすること: 100msだと
+        // Z→Pの間隔が100〜200msのときコンボ切れ+hold未確定の隙間が生まれ、
+        // Pより先にZを離すと「zp」に化ける(実際に発生した)。200msなら
+        // 間隔0〜200msはコンボ、200ms超はhold確定済みのShiftで隙間がない。
 
         shift_p {
             bindings = <&kp LS(P)>;
             key-positions = <22 9>;
-            timeout-ms = <100>;
+            timeout-ms = <200>;
             layers = <BASE>;
         };
 
@@ -306,8 +309,8 @@
         // Z+Spaceのhalf_spaceコンボと同じ「相手キーで意図を確定する」発想だが、
         // シフトとしてZを先に押し込んでから/を押すとコンボのtimeout-msを超えて
         // 取りこぼすため、基本はhold-tap側で実装する。Pのみ即時性を優先して
-        // shift_pコンボを併設し、100ms超の「Zを先に押し込む」使い方は
-        // このhold-tapのbalanced判定が受け持つ(コンボ/hold-tapで両対応)。
+        // shift_pコンボ(timeout=tapping-termの200ms)を併設し、200ms超の
+        // 「Zを先に押し込む」使い方はhold確定済みのShiftが受け持つ。
 
         hm_shift_z: hm_shift_z {
             compatible = "zmk,behavior-hold-tap";
