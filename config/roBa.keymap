@@ -127,6 +127,26 @@
             layers = <BASE>;
         };
 
+        // Enter(SYMBOL)+P の「@」を、同時押しを検出した瞬間に確定させる。
+        // &lt のbalanced判定は「Pを押して離す」までhold確定を待つため、
+        // チョン押しでPより先にEnterを離すとタップに倒れ「Enter+p」に化ける。
+        // さらに&ltのquick-tap-ms=300により、Enter(確定/改行)直後300ms以内の
+        // 押し直しは必ずタップ(リピート)になりSYMBOLに入れない隙もある。
+        // half_space(Z+Space)と同じく相手キーがPなら@意図と確定できるので
+        // コンボでアトミックに送出する。コンボはhold-tapより先に評価される
+        // ためquick-tapの影響も受けない。
+        // timeout-msはshift_pの教訓どおり&ltのtapping-term(200)と同値にして
+        // コンボ切れ+hold未確定の隙間を作らない。
+        // 注意: 直接入力で「p→Enter」を200ms以内に重ねてロールすると@に
+        // 化け得る(ローマ字はpで終わる打鍵列がないため日本語入力は安全)。
+
+        at_mark {
+            bindings = <&kp AT_SIGN>;
+            key-positions = <41 9>;
+            timeout-ms = <200>;
+            layers = <BASE>;
+        };
+
         // O+P は「ぽ」等の高頻度ロールオーバーで誤爆する(U+Iのpasteコンボと
         // 同じ問題)。require-prior-idle-ms で文中のpoは抑止しつつ、
         // 打ち始め(アイドル後)にコンボへ食われた場合も実害が出ないよう、
