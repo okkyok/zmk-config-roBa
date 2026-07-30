@@ -101,11 +101,16 @@
         // しまう。タイミングでは判別できないが相手キーがスペースであれば
         // 半角スペース意図と確定できるので、コンボでShift+Spaceを
         // アトミックに送出する。IME側のShift+Space=半角スペース設定が前提。
+        // timeout-msはshift_pの教訓どおりhm_shift_zのtapping-term(200)と
+        // 同値にする。以前の100msでは、Z→Spaceの間隔が100〜200msのとき
+        // コンボ切れ+hold未確定(Spaceはhold-trigger-key-positions外なので
+        // Z即タップ)の隙間に落ち、「z」が変換に入っていた。
+        // (check_keymap_gaps.pyが検出した隙間)
 
         half_space {
             bindings = <&kp LS(SPACE)>;
             key-positions = <22 38>;
-            timeout-ms = <100>;
+            timeout-ms = <200>;
             layers = <BASE>;
         };
 
@@ -144,6 +149,50 @@
             bindings = <&kp AT_SIGN>;
             key-positions = <41 9>;
             timeout-ms = <200>;
+            layers = <BASE>;
+        };
+
+        // Z(Shift)+Enter の「Shift+Enter」を、同時押しを検出した瞬間に確定
+        // させる。shift_pと同型の隙間: hm_shift_z のbalanced判定は「相手キー
+        // を押して離す」までhold確定を待つため、素早くロールして先にZを離すと
+        // 「z」+Enter(通常の改行)に化ける。hold-trigger-key-positionsに41
+        // (Enter)を加えただけではこの「Zを先に離す」ケースは救えない
+        // (balanced判定に入るだけで、判定順序の問題はそのまま残るため)。
+        // H/K/L と違い、zの後にEnterが続く入力をローマ字で使う理由がなく、
+        // 「先にZを離す」を逃げ道として残す必要もないため、Pと同じく
+        // コンボでアトミックに送出する。
+        // timeout-msはshift_p/at_markと同じくtapping-term-ms(200)と同値にして
+        // コンボ切れ+hold未確定の隙間を作らない。
+
+        shift_enter {
+            bindings = <&kp LS(ENTER)>;
+            key-positions = <22 41>;
+            timeout-ms = <200>;
+            layers = <BASE>;
+        };
+
+        // A(Ctrl)+G = Raycast起動用。hm_instant(tap-preferred)は「サッと
+        // 2キーを押して離す」呼び出しがtapping-term(200ms)に届かず「あｇ」化し、
+        // かといってtermを150へ縮めると通常タイピングのa単打の押下時間が
+        // termを超えてCtrl化けし「aが出ない」回帰を起こした(タイミングでは
+        // 分離不能)。half_spaceと同じく、コンボで「A+Gほぼ同時押し=Ctrl+G」を
+        // アトミックに確定する。
+        // timeout-msはshift_p/at_mark/shift_enterと同じくhm_instantの
+        // tapping-term-ms(200)と同値にすること: 100msのままだとA→Gの間隔が
+        // 100〜200msのときコンボ切れ+hold未確定の隙間が生まれ、素早く離すと
+        // 「ag」に化ける(実際に発生した)。200msなら間隔0〜200msはコンボ、
+        // 200ms超はAが自力でhold確定済み(hm_instant参照)なので隙間がない。
+        // require-prior-idle-ms=150で文中の「あが/あげ」等のロールオーバー
+        // 誤発を抑止。打ち始め(アイドル後)の高速な「あが…」ロールがA/G重なり
+        // 200ms以内だと誤発の余地がわずかに残る(P/Enterと異なりa→gはローマ字に
+        // 実在するため完全には消せない) — 顕在化したらtimeout-msを100等へ
+        // 戻すか、Raycast起動を他キーに移す。
+
+        raycast_ag {
+            bindings = <&kp LC(G)>;
+            key-positions = <10 14>;
+            timeout-ms = <200>;
+            require-prior-idle-ms = <150>;
             layers = <BASE>;
         };
 
@@ -250,12 +299,11 @@
         //    Raycastが起動しなかった。リストに入れることでA/G双方を押し続け
         //    tapping-term経過後にCtrl+Gが確実に届く(素早く離した場合は従来
         //    どおり「ag」の文字入力)。
-        // tap-preferredはA/Gどちらかを離した時点で即タップ確定するため、
-        // Raycastを「サッと2キーをチョン押しして離す」ジェスチャーで呼ぶと
-        // 200msに届かず「あｇ」に化けていた。tapping-term-msを150に短縮し
-        // 必要な押し続け時間を短縮。ローマ字タイピングの実打鍵時間(1キー
-        // あたり数十ms)はこれでも十分下回るため、あがる/あげる等の巻き込み
-        // 保護には影響しない。
+        // tapping-termは200を維持する。一度150へ縮めて素早いA+Gの取りこぼしを
+        // 減らそうとしたが、通常タイピングでのa単打の押下時間(押して離すまで)は
+        // 150msを超えることが多く、a単打がhold(Ctrl)扱いになり「aが出ない」
+        // 回帰を起こした。素早いA+G呼び出しはタイミングでは救えないため、
+        // raycast_agコンボ(combos参照)で「ほぼ同時押し=Ctrl+G」を確定する。
         // Ctrl+G/H/K/LはAをterm以上押し続けたときだけ発動し、term前に押した
         // 相手キーもキュー再生されるので取りこぼさない。リスト外キーとの
         // Ctrl組み合わせはAを長押ししてhold確定後に相手キーを押せば従来
@@ -267,7 +315,7 @@
             bindings = <&kp>, <&kp>;
 
             #binding-cells = <2>;
-            tapping-term-ms = <150>;
+            tapping-term-ms = <200>;
             flavor = "tap-preferred";
             quick-tap-ms = <0>;
             hold-trigger-key-positions = <14 17 19 20>;
@@ -324,12 +372,15 @@
         // (即タップ確定のため)ので、X側Shiftか右手の/(Shift)を使う。
         // Enter(41)も同構造でShift+Enter(改行/変換確定)が効かず「z」+改行に
         // なっていた。ローマ字ではzの後に必ず母音が要るため「z直後にEnter」は
-        // 日本語入力で意図されることがなく、balanced判定に入れて安全。
+        // 日本語入力で意図されることがなく、balanced判定に入れて安全。ただし
+        // Pと同じく、hold-trigger-key-positionsへの追加だけでは「先にZを離す」
+        // 高速ロールを救えない(balanced判定に入っても判定順序の問題は残る)ため、
+        // Pと同じくshift_enterコンボ(combos参照)を併設して即時確定させる。
         // 「・」自体は従来どおり / 単打で入力できるので失うものはない。
         // Z+Spaceのhalf_spaceコンボと同じ「相手キーで意図を確定する」発想だが、
         // シフトとしてZを先に押し込んでから/を押すとコンボのtimeout-msを超えて
-        // 取りこぼすため、基本はhold-tap側で実装する。Pのみ即時性を優先して
-        // shift_pコンボ(timeout=tapping-termの200ms)を併設し、200ms超の
+        // 取りこぼすため、基本はhold-tap側で実装する。P/Enterのみ即時性を優先
+        // してそれぞれ専用コンボ(timeout=tapping-termの200ms)を併設し、200ms超の
         // 「Zを先に押し込む」使い方はhold確定済みのShiftが受け持つ。
 
         hm_shift_z: hm_shift_z {

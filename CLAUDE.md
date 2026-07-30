@@ -1,0 +1,39 @@
+# zmk-config-roBa
+
+roBa(分割キーボード)のZMK設定。日本語入力(ローマ字/IME)前提のチューニングが多い。
+
+## キーマップ変更時の必須手順
+
+1. `config/roBa.keymap` を編集したら、必ず検証を実行する:
+
+   ```bash
+   python3 scripts/check_keymap_gaps.py
+   ```
+
+2. 違反が出たら修正してから commit する(pre-commit hook と CI の gap-check ジョブでも強制される)。
+
+## 設計ルール(過去の実バグから確立)
+
+### 「隙間」の鉄則: 加速コンボの timeout-ms は hold 側の tapping-term-ms と同値にする
+
+ホールドタップ(Z=Shift/z 等)の修飾+相手キーを即時確定する「加速コンボ」
+(shift_p / shift_enter / half_space / at_mark / raycast_ag)では:
+
+- 間隔 0〜timeout → コンボ発火 / 間隔 term〜 → hold確定済み
+- **間隔 timeout〜term → どちらの経路にも乗らない「隙間」→ 文字化け**
+
+timeout == term (現状すべて200) なら隙間がない。shift_p → raycast_ag → half_space と3回同じバグを踏んだ教訓。`check_keymap_gaps.py` がこの不変条件を自動検証する。
+
+### その他の教訓
+
+- **require-prior-idle-ms は「押した瞬間タップ確定」**: どれだけ長押ししても覆らない。速いタイピング直後のホールド操作(Z+/等)を壊すので、ホールド用途が主のキーには使わず、hold-trigger-key-positions で守る。
+- **quick-tap-ms は「長押しを強制タップ化」する**: タップ直後300ms以内の押し直しはレイヤー/修飾に入れない(NUMスペースの誤爆原因)。ホールド用途と両立させる場合は短縮する(lt_num_space=150)。
+- **tapping-term-ms を150以下に縮めない**: 通常タイピングの単打の押下時間(押して離すまで)が150msを超えることがあり、単打がhold化けして「文字が出ない」回帰を起こす(hm_instant で実際に発生)。
+- **balanced は「相手キーを押して離す」までhold確定を待つ**: 先にホールド側を離す高速ロールはタップに化ける。即時確定が必要な組み合わせはコンボを併設する(shift_p / shift_enter)。
+- **IMEのzプレフィックス**: z/ =・、zh/zj/zk/zl =矢印、z. =…等。Zシフトの取りこぼしはこれらに食われて「別の文字が出る」形で顕在化する。
+- **ローマ字の隣接性を確認してからコンボを張る**: a→g(あがる)のように実在する並びは require-prior-idle-ms で守り、z→p のように実在しない並びは自由に使える。
+
+## コミュニケーション
+
+- コメント・コミットメッセージは日本語。既存コメントの様式(原因→対策→トレードオフを詳述)に合わせる。
+- ビルドはローカル不可。push後のGitHub Actionsで確認する。

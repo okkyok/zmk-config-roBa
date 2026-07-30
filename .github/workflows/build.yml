@@ -1,5 +1,14 @@
 on: [push, pull_request, workflow_dispatch]
 
 jobs:
+  # キーマップの「隙間」(コンボ切れ+hold未確定の窓)を検出。
+  # 違反があればビルドを止め、隙間入りファームウェアの配布を防ぐ。
+  gap-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 scripts/check_keymap_gaps.py
+
   build:
+    needs: gap-check
     uses: zmkfirmware/zmk/.github/workflows/build-user-config.yml@v0.3-branch
