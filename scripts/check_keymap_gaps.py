@@ -22,6 +22,14 @@ keymap を解析して「加速コンボ」を自動検出し(コンボの出力
 
   R1: timeout-ms がホールド側の tapping-term-ms と同値であること
   R2: layers 指定があること(全レイヤーで誤発火しないため)
+  R3: 修飾系の加速コンボは slow-release + press/releaseマクロ
+      (修飾押下→相手キータップ→全キー解放まで保持→修飾解放)であること。
+      &kp LS(X) の直バインドはコンボが最初のキー解放でバインディングを
+      解放するため、相手キーを離した瞬間に修飾が消え、ホールド側キーを
+      押したまま相手キーを連打すると2回目以降が無修飾に化ける
+      (Z+Enter連打の2回目がただの改行になった実バグ)。
+      コンボの出力判定はマクロを解決して行う(press/tap/releaseの構成から
+      「kp LS(ENTER)」相当の正規形を導出して照合する)。
 
 ## 意図的な例外 — gap-ok マーカー
 
@@ -116,6 +124,37 @@ def bindings_entries(body: str):
     return entries
 
 
+def macro_canonical(body: str):
+    """press/tap/release 構成のマクロから「kp LS(ENTER)」形式の正規形を導出。
+
+    「単独修飾を press → 相手キーを1回 tap → 同じ修飾を release」の形
+    (加速コンボの受け先マクロ)のみ対象。それ以外は None。
+    """
+    m = re.search(r"(?<![\w-])bindings\s*=\s*(.*?);", body, flags=re.DOTALL)
+    if not m:
+        return None
+    chunks = [c.split() for c in re.sub(r"[<>,]", " ", m.group(1)).split("&")
+              if c.split()]
+    mode = "tap"
+    keys = {"press": [], "release": [], "tap": []}
+    for toks in chunks:
+        head = toks[0]
+        if head in ("macro_press", "macro_release", "macro_tap"):
+            mode = head.removeprefix("macro_")
+        elif head == "macro_pause_for_release":
+            continue
+        elif head == "kp" and len(toks) >= 2:
+            keys[mode].append(toks[1])
+        else:
+            return None  # 解析対象外のマクロ
+    if (len(keys["press"]) == 1 and keys["press"] == keys["release"]
+            and len(keys["tap"]) == 1):
+        wrap = MOD_WRAP.get(keys["press"][0])
+        if wrap:
+            return f"kp {wrap}({keys['tap'][0]})"
+    return None
+
+
 def main() -> int:
     raw = KEYMAP.read_text()
     # コメント除去前に gap-ok(name) マーカーを収集(意図的な例外宣言)
@@ -143,6 +182,16 @@ def main() -> int:
             body, _ = block_body(text, m.end() - 1)
             term = prop_int(body, "tapping-term-ms", DEFAULT_TAPPING_TERM)
         behaviors.setdefault(name, (kind, term))
+
+    # --- macros: 名前 → 加速コンボ受け先としての正規形出力 ---
+    macro_canon = {}
+    for m in re.finditer(r"(\w+):\s*[\w-]+\s*\{", text):
+        body, _ = block_body(text, m.end() - 1)
+        if "zmk,behavior-macro" not in body:
+            continue
+        canon = macro_canonical(body)
+        if canon:
+            macro_canon[m.group(1)] = canon
 
     # --- keymap: レイヤー番号 → 位置 → バインディング ---
     km = re.search(r"keymap\s*\{", text)
@@ -179,7 +228,8 @@ def main() -> int:
         if not positions or len(positions) != 2 or len(binding) != 1:
             continue
         p0, p1 = (int(p) for p in positions)
-        combo_out = " ".join(binding[0])
+        # マクロ受け先ならR3対応形とみなし、正規形(kp LS(X)等)へ解決して照合
+        combo_out = macro_canon.get(binding[0][0], " ".join(binding[0]))
         timeout = prop_int(body, "timeout-ms", DEFAULT_COMBO_TIMEOUT)
         layer_prop = prop_list(body, "layers")
         combo_layers = ([defines.get(tok, None) for tok in layer_prop]
@@ -225,6 +275,16 @@ def main() -> int:
                     errors.append(
                         f"{where}: layers 指定がない。全レイヤーで誤発火"
                         f"し得るため layers = <...> を明示すること。")
+                elif kind == "mod" and (
+                        binding[0][0] not in macro_canon
+                        or not re.search(r"(?<![\w-])slow-release\s*;", body)):
+                    errors.append(
+                        f"{where}: 修飾系の加速コンボは slow-release + "
+                        f"press/releaseマクロにすること(R3)。&kp 直バインド"
+                        f"またはslow-release欠落だと、相手キーを離した瞬間に"
+                        f"修飾が消え、ホールド側を押したまま相手キーを連打"
+                        f"すると2回目以降が無修飾に化ける(Z+Enterで実際に"
+                        f"発生)。")
                 else:
                     verified.append(where)
 
