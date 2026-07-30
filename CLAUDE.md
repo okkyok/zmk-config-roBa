@@ -22,7 +22,7 @@ roBa(分割キーボード)のZMK設定。日本語入力(ローマ字/IME)前�
 - 間隔 0〜timeout → コンボ発火 / 間隔 term〜 → hold確定済み
 - **間隔 timeout〜term → どちらの経路にも乗らない「隙間」→ 文字化け**
 
-timeout == term (現状すべて200) なら隙間がない。shift_p → raycast_ag → half_space と3回同じバグを踏んだ教訓。`check_keymap_gaps.py` がこの不変条件を自動検証する。
+timeout == term なら隙間がない(値そのものはコンボごとに異なってよい。例: hm_shift_z系は170、at_mark/raycast_fgは200)。shift_p → raycast_ag → half_space と3回同じバグを踏んだ教訓。`check_keymap_gaps.py` がこの不変条件を自動検証する。
 
 **例外 — ローマ字隣接ペアは隙間を閉じられない**: a→g(あが)のように2キーの並びがローマ字に実在する加速コンボは、timeout を term まで広げると通常タイピングのロールを食って誤発する(raycast_ag で「あが」がほぼ毎回 Raycast 化けした実バグ)。require-prior-idle は打鍵間隔がそれを超える普通のタイピングでは効かない点に注意。この場合は隙間ゼロを諦めて、
 - timeout を小さく(50ms=同時チョン押しのみ)、require-prior-idle を大きく(200ms)

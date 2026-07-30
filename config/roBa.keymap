@@ -101,7 +101,7 @@
         // しまう。タイミングでは判別できないが相手キーがスペースであれば
         // 半角スペース意図と確定できるので、コンボでShift+Spaceを
         // アトミックに送出する。IME側のShift+Space=半角スペース設定が前提。
-        // timeout-msはshift_pの教訓どおりhm_shift_zのtapping-term(200)と
+        // timeout-msはshift_pの教訓どおりhm_shift_zのtapping-term(170)と
         // 同値にする。以前の100msでは、Z→Spaceの間隔が100〜200msのとき
         // コンボ切れ+hold未確定(Spaceはhold-trigger-key-positions外なので
         // Z即タップ)の隙間に落ち、「z」が変換に入っていた。
@@ -113,7 +113,7 @@
         half_space {
             bindings = <&half_space_hold>;
             key-positions = <22 38>;
-            timeout-ms = <200>;
+            timeout-ms = <170>;
             slow-release;
             layers = <BASE>;
         };
@@ -124,10 +124,10 @@
         // hold-preferredにするとリスト内の全キーが押下即Shiftになり副作用が
         // 大きいので、Pだけコンボでアトミックに送出する。ローマ字に「zp」は
         // 現れないため誤爆の余地がない。
-        // timeout-msは必ずtapping-term-ms(200)と同値にすること: 100msだと
-        // Z→Pの間隔が100〜200msのときコンボ切れ+hold未確定の隙間が生まれ、
-        // Pより先にZを離すと「zp」に化ける(実際に発生した)。200msなら
-        // 間隔0〜200msはコンボ、200ms超はhold確定済みのShiftで隙間がない。
+        // timeout-msは必ずtapping-term-ms(170)と同値にすること: 100msだと
+        // Z→Pの間隔が100〜170msのときコンボ切れ+hold未確定の隙間が生まれ、
+        // Pより先にZを離すと「zp」に化ける(実際に発生した)。170msなら
+        // 間隔0〜170msはコンボ、170ms超はhold確定済みのShiftで隙間がない。
 
         // slow-release+専用マクロでZを離すまでShiftを維持する
         // (理由は shift_enter_hold マクロ定義のコメント参照)。
@@ -135,7 +135,7 @@
         shift_p {
             bindings = <&shift_p_hold>;
             key-positions = <22 9>;
-            timeout-ms = <200>;
+            timeout-ms = <170>;
             slow-release;
             layers = <BASE>;
         };
@@ -169,7 +169,7 @@
         // H/K/L と違い、zの後にEnterが続く入力をローマ字で使う理由がなく、
         // 「先にZを離す」を逃げ道として残す必要もないため、Pと同じく
         // コンボでアトミックに送出する。
-        // timeout-msはshift_p/at_markと同じくtapping-term-ms(200)と同値にして
+        // timeout-msはshift_p/at_markと同じくtapping-term-ms(170)と同値にして
         // コンボ切れ+hold未確定の隙間を作らない。
         // さらに slow-release+専用マクロで「Zを離すまでShift維持」にする。
         // &kp LS(ENTER) の直バインドでは相手キー(Enter)を離した瞬間にコンボが
@@ -179,7 +179,7 @@
         shift_enter {
             bindings = <&shift_enter_hold>;
             key-positions = <22 41>;
-            timeout-ms = <200>;
+            timeout-ms = <170>;
             slow-release;
             layers = <BASE>;
         };
@@ -467,7 +467,7 @@
         // Z+Spaceのhalf_spaceコンボと同じ「相手キーで意図を確定する」発想だが、
         // シフトとしてZを先に押し込んでから/を押すとコンボのtimeout-msを超えて
         // 取りこぼすため、基本はhold-tap側で実装する。P/Enterのみ即時性を優先
-        // してそれぞれ専用コンボ(timeout=tapping-termの200ms)を併設し、200ms超の
+        // してそれぞれ専用コンボ(timeout=tapping-termの170ms)を併設し、170ms超の
         // 「Zを先に押し込む」使い方はhold確定済みのShiftが受け持つ。
 
         hm_shift_z: hm_shift_z {
@@ -476,7 +476,11 @@
             bindings = <&kp>, <&kp>;
 
             #binding-cells = <2>;
-            tapping-term-ms = <200>;
+            // 200ms→170msに短縮。Z+相手キーを両方押しっぱなしにする使い方
+            // (balancedなので相手キー解放 or このタイマー切れで確定)での
+            // Shift確定の体感遅延を縮める。150ms以下には縮めない
+            // (通常タイピングの単打がhold化けする回帰。CLAUDE.md参照)。
+            tapping-term-ms = <170>;
             flavor = "balanced";
             quick-tap-ms = <300>;
             hold-trigger-key-positions = <0 1 3 4 9 11 12 13 14 17 18 19 20 23 24 25 26 29 30 33 41>;
