@@ -127,27 +127,6 @@
             layers = <BASE>;
         };
 
-        // A(Ctrl)+H の1文字削除(Ctrl+H)を、同時押しを検出した瞬間に確定させる。
-        // hm_instant はtap-preferredのためholdの確定にA押下150ms(tapping-term)
-        // が必要で、それより早くAを離すと「ah」の文字入力に化ける。shift_pと
-        // 同じコンボ方式だが、「ah」は shift_p の「zp」と違いローマ字に頻出する
-        // (「あなたは(anataha)」「あはは」等のa→hロール)ため、
-        // require-prior-idle-ms=150 を付けて連続タイピング中はコンボを無効化
-        // する。ミス消し操作は「気づいて→押す」で自然に150ms以上の間が空く
-        // ので実用上は常にコンボが効く。タイプ開始直後(アイドル後)の
-        // 「あは〜」をa-h重ねロールで打つと誤爆し得るが頻度・実害とも小さい。
-        // timeout-msはtapping-term(150)と同値: 間隔0〜150msはコンボ、150ms超は
-        // hold確定済みのCtrlが受け持ち、shift_pで踏んだ無防備な隙間を作らない。
-        // G/K/L(Raycast・カタカナ・英数)への展開は様子を見て判断(一旦H限定)。
-
-        ctrl_h {
-            bindings = <&kp LC(H)>;
-            key-positions = <10 17>;
-            timeout-ms = <150>;
-            require-prior-idle-ms = <150>;
-            layers = <BASE>;
-        };
-
         // O+P は「ぽ」等の高頻度ロールオーバーで誤爆する(U+Iのpasteコンボと
         // 同じ問題)。require-prior-idle-ms で文中のpoは抑止しつつ、
         // 打ち始め(アイドル後)にコンボへ食われた場合も実害が出ないよう、
@@ -261,7 +240,6 @@
         // 相手キーもキュー再生されるので取りこぼさない。リスト外キーとの
         // Ctrl組み合わせはAを長押ししてhold確定後に相手キーを押せば従来
         // どおり。quick-tap-msはタップ直後の押し直しをCtrlとして使うため0のまま。
-        // A+Hのみ即時性を優先し、ctrl_hコンボ(アイドル後限定)を併設している。
 
         hm_instant: hm_instant {
             compatible = "zmk,behavior-hold-tap";
