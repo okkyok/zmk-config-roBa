@@ -23,6 +23,17 @@ keymap を解析して「加速コンボ」を自動検出し(コンボの出力
   R1: timeout-ms がホールド側の tapping-term-ms と同値であること
   R2: layers 指定があること(全レイヤーで誤発火しないため)
 
+## 意図的な例外 — gap-ok マーカー
+
+2キーの並びがローマ字に実在する組(例: raycast_ag の a→g「あが」)は、
+timeout を term まで広げると通常タイピングを食って誤発する(実際に発生)。
+その場合は隙間ゼロを諦めて timeout を小さくし、中間域を文字入力(安全側)に
+倒す。この判断をした箇所は keymap 内のコメントに
+
+    // gap-ok(コンボ名): 理由...
+
+と書くと R1 を免除する(理由の併記必須。マーカーだけの免除は運用で禁止)。
+
 使い方: python3 scripts/check_keymap_gaps.py  (終了コード0=OK / 1=違反あり)
 CI (build.yml) とローカルの pre-commit hook から自動実行される。
 """
@@ -106,7 +117,10 @@ def bindings_entries(body: str):
 
 
 def main() -> int:
-    text = strip_comments(KEYMAP.read_text())
+    raw = KEYMAP.read_text()
+    # コメント除去前に gap-ok(name) マーカーを収集(意図的な例外宣言)
+    gap_ok = set(re.findall(r"gap-ok\((\w+)\)", raw))
+    text = strip_comments(raw)
 
     defines = {m.group(1): int(m.group(2))
                for m in re.finditer(r"#define\s+(\w+)\s+(\d+)", text)}
@@ -158,6 +172,7 @@ def main() -> int:
     combos_body, _ = block_body(text, combos.end() - 1)
     errors = []
     verified = []
+    waived = []
     for name, body in child_nodes(combos_body):
         positions = prop_list(body, "key-positions")
         binding = bindings_entries(body)
@@ -193,12 +208,19 @@ def main() -> int:
                 # 加速コンボと判定
                 where = (f"combo '{name}' (pos {holder}+{tapped}, "
                          f"holder=&{h[0]}, 出力 {combo_out})")
-                if timeout != term:
+                if timeout != term and name in gap_ok:
+                    waived.append(
+                        f"{where}: timeout-ms={timeout} != term={term} だが "
+                        f"gap-ok 宣言あり(間隔{timeout}〜{term}msは文字入力に"
+                        f"倒す設計)。")
+                elif timeout != term:
                     errors.append(
                         f"{where}: timeout-ms={timeout} だがホールド側 "
                         f"&{h[0]} の tapping-term-ms={term}。間隔が "
                         f"{timeout}〜{term}ms のとき隙間に落ちる。"
-                        f"timeout-ms = <{term}> に揃えること(shift_pの教訓)。")
+                        f"timeout-ms = <{term}> に揃えるか、ローマ字隣接等で"
+                        f"それが不可能な場合は理由付きで gap-ok({name}) を"
+                        f"コメントに書くこと。")
                 elif layer_prop is None:
                     errors.append(
                         f"{where}: layers 指定がない。全レイヤーで誤発火"
@@ -210,6 +232,10 @@ def main() -> int:
         print("検証済みの加速コンボ (timeout==term / layers指定あり):")
         for v in sorted(set(verified)):
             print(f"  OK {v}")
+    if waived:
+        print("意図的な例外 (gap-ok宣言):")
+        for w in sorted(set(waived)):
+            print(f"  許容 {w}")
     if errors:
         print("\nNG 隙間の可能性を検出:", file=sys.stderr)
         for e in sorted(set(errors)):
