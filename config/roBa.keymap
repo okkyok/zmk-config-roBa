@@ -315,6 +315,35 @@
             hold-trigger-key-positions = <17 19 20>;
         };
 
+        // S(Shift+Cmd)は「し(shi)」「しゃ(sha)」等のs→hロールで、hを押して
+        // 離した時点でbalancedがholdを確定し、後続もろともShift+Cmd+H/Iに
+        // 化ける誤爆があった(require-prior-idle=170は連続入力中しか効かず、
+        // 打ち始めや打鍵間隔の開いた「し」がすり抜ける)。
+        // タイピング快適性を最優先し、tap-preferredの専用behaviorへ差し替え:
+        //  - キー割り込みではholdに倒さない。termの200ms未満でSを離せば常に
+        //    タップで、巻き込んだキーもキュー再生されるので取りこぼしなし
+        //  - require-prior-idle=170は維持: 連続入力中は押した瞬間タップ確定で
+        //    表示遅延もゼロ(アイドル後の打ち始めのみキュー再生の僅かな遅延)
+        //  - Shift+Cmdショートカットは、Sを200ms(tapping-term)押し込んで
+        //    hold確定させてから相手キーを押す(termまでに巻き込んだ相手キーも
+        //    mods付きで再生される)。トレードオフ: 打鍵直後170ms以内に
+        //    S長押しを始めるショートカットは効かない(一拍おいてから押す)
+        // quick-tap=300はタップ直後の押し直しを必ずタップに倒す(&mtと同値)。
+        // D(Cmd)/F(Alt)/G(Ctrl)にも同型の誤爆リスクはあるが、実害報告のある
+        // Sのみ差し替え、他は顕在化したら同じbehaviorへ寄せる。
+
+        hm_typing: hm_typing {
+            compatible = "zmk,behavior-hold-tap";
+            label = "HM_TYPING";
+            bindings = <&kp>, <&kp>;
+
+            #binding-cells = <2>;
+            tapping-term-ms = <200>;
+            flavor = "tap-preferred";
+            quick-tap-ms = <300>;
+            require-prior-idle-ms = <170>;
+        };
+
         // &lt と同じ設定に require-prior-idle-ms を追加した layer-tap。
         // Pキー(SCROLL)はロールオーバーの多い「ぽ/ぴ」等の直後に叩かれるため、
         // &mt と同様に直前打鍵から150ms以内なら即タップに倒す。
@@ -564,7 +593,7 @@
         default_layer {
             bindings = <
 &kp Q                &kp W                   &kp E       &kp R           &kp T                                                                          &kp Y             &kp U       &kp I       &kp O           &lt_instant_tap SCROLL P
-&hm_instant LCTRL A  &mt LS(LEFT_COMMAND) S  &mt LGUI D  &mt LALT F      &mt LCTRL G    &kp TAB                         &mt RC(RS(RA(RGUI))) SEMICOLON  &kp H             &mt RALT J  &mt RGUI K  &mt RS(RGUI) L  &mt RCTRL MINUS
+&hm_instant LCTRL A  &hm_typing LS(LEFT_COMMAND) S  &mt LGUI D  &mt LALT F      &mt LCTRL G    &kp TAB                         &mt RC(RS(RA(RGUI))) SEMICOLON  &kp H             &mt RALT J  &mt RGUI K  &mt RS(RGUI) L  &mt RCTRL MINUS
 &hm_shift_z LEFT_SHIFT Z  &mt LEFT_SHIFT X   &kp C       &kp V           &kp B          &lt MOUSE LS(TAB)               &kp RS(RA(RC(RGUI)))            &kp N             &kp M       &kp COMMA   &kp DOT         &mt LEFT_SHIFT SLASH
 &kp LGUI             &kp LALT                &kp LGUI    &lt BT_L LANG2  &lt_num_space NUM SPACE  &lt_to_layer_0 ARROW LANG1      &kp BACKSPACE                   &lt SYMBOL ENTER                                          &lt MOUSE ESC
             >;
