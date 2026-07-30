@@ -240,6 +240,11 @@
         // &mt と同様に直前打鍵から150ms以内なら即タップに倒す。
         // 他の &lt 利用箇所(SPACEやENTER等)は単語直後にあえて長押しする
         // 使い方があるため、影響をPキーだけに限定する。
+        // flavorはtap-preferredにすること: balancedだと打ち始め(アイドル後)の
+        // 速い「pu」等でP押下中にUの押下→解放が完了した時点でholdが確定し、
+        // pが消えて「u」だけになる誤爆があった。SCROLLホールドはトラック
+        // ボール操作専用で他キーとの同時押しを必要としないため、キー割り込み
+        // でholdに倒す理由がなく、200ms押し続けたときだけholdで十分。
 
         lt_instant_tap: lt_instant_tap {
             compatible = "zmk,behavior-hold-tap";
@@ -248,7 +253,7 @@
 
             #binding-cells = <2>;
             tapping-term-ms = <200>;
-            flavor = "balanced";
+            flavor = "tap-preferred";
             quick-tap-ms = <300>;
             require-prior-idle-ms = <150>;
         };
