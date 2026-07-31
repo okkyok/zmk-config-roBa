@@ -565,6 +565,31 @@
             mods = <(MOD_LCTL)>;
             keep-mods = <(MOD_LCTL)>;
         };
+
+        // Ctrl+6(NUM層のH位置)・Ctrl+{(SYMBOL層のH位置)をBackspaceにする。
+        // CtrlはAのhold-tap(LCTRL)から供給されるため、押下時点でmodsに
+        // LCTRL/RCTRLが立っている。mm_bt_s_q/mm_bt_d_wはkeep-modsでCtrlを
+        // 残して送っているが、ここは逆にCtrl抜きの単発Backspaceが欲しいので
+        // keep-modsは付けない(mod-morphは発火時のmodsをデフォルトで
+        // マスクする)。Ctrl非押下時は従来どおり6 / { が出る。
+
+        mm_num_6_bspc: mm_num_6_bspc {
+            compatible = "zmk,behavior-mod-morph";
+            label = "MM_NUM_6_BSPC";
+            #binding-cells = <0>;
+            bindings = <&kp NUMBER_6>, <&kp BACKSPACE>;
+
+            mods = <(MOD_LCTL|MOD_RCTL)>;
+        };
+
+        mm_symbol_lbrace_bspc: mm_symbol_lbrace_bspc {
+            compatible = "zmk,behavior-mod-morph";
+            label = "MM_SYMBOL_LBRACE_BSPC";
+            #binding-cells = <0>;
+            bindings = <&kp LEFT_BRACE>, <&kp BACKSPACE>;
+
+            mods = <(MOD_LCTL|MOD_RCTL)>;
+        };
     };
 
     zip_mouse_gesture_l7: zip_mouse_gesture_l7 {
@@ -687,7 +712,7 @@
         symbol_layer {
             bindings = <
 &kp EQUAL       &kp SLASH  &kp ASTERISK  &kp MINUS  &kp PLUS                          &kp AMPERSAND   &kp CARET        &kp LEFT_BRACKET  &kp RIGHT_BRACKET  &kp AT_SIGN
-&mt LCTRL EXCL  &kp DQT    &kp HASH      &kp DLLR   &kp PRCNT  &trans      &kp COLON  &kp LEFT_BRACE  &kp RIGHT_BRACE  &kp LPAR          &kp RPAR           &kp TILDE
+&mt LCTRL EXCL  &kp DQT    &kp HASH      &kp DLLR   &kp PRCNT  &trans      &kp COLON  &mm_symbol_lbrace_bspc  &kp RIGHT_BRACE  &kp LPAR          &kp RPAR           &kp TILDE
 &mt LSHFT F1    &kp F2     &kp F3        &kp F4     &kp F5     &trans      &trans     &kp F6          &kp F7           &kp F8            &kp F9             &mt RSHIFT F10
 &trans          &trans     &trans        &trans     &trans     &trans      &trans     &trans                                                                &trans
             >;
@@ -698,7 +723,7 @@
         num_layer {
             bindings = <
 &kp EQUAL           &kp SLASH     &kp STAR      &kp MINUS     &kp PLUS                                      &kp INT_YEN   &kp DOLLAR    &kp PIPE      &kp COLON              &kp PERCENT
-&mt LCTRL NUMBER_1  &kp NUMBER_2  &kp NUMBER_3  &kp NUMBER_4  &kp NUMBER_5  &trans               &mul_mark  &kp NUMBER_6  &kp NUMBER_7  &kp NUMBER_8  &mt RS(RGUI) NUMBER_9  &mt RCTRL NUMBER_0
+&mt LCTRL NUMBER_1  &kp NUMBER_2  &kp NUMBER_3  &kp NUMBER_4  &kp NUMBER_5  &trans               &mul_mark  &mm_num_6_bspc  &kp NUMBER_7  &kp NUMBER_8  &mt RS(RGUI) NUMBER_9  &mt RCTRL NUMBER_0
 &mt LSHFT NUMBER_6  &kp NUMBER_7  &kp NUMBER_8  &kp NUMBER_9  &kp NUMBER_0  &kp KP_MULTIPLY      &div_mark  &kp F11       &kp F12       &kp COMMA     &kp DOT                &mt RSHIFT DOLLAR
 &trans              &trans        &trans        &trans        &trans        &trans               &trans     &trans                                                           &trans
             >;
