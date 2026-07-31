@@ -710,10 +710,10 @@
             // 右手側はWindows用ショートカット(Win+矢印スナップ, PrintScreen系)。Mac利用時は要調整。
 
             bindings = <
-&kp PG_UP  &kp PG_UP       &kp UP_ARROW    &kp PAGE_DOWN    &kp PG_DN                                 &trans             &kp Y           &kp UP_ARROW    &kp U            &trans
-&kp HOME   &kp LEFT_ARROW  &kp DOWN_ARROW  &kp RIGHT_ARROW  &kp END    &kp LA(LCTRL)      &trans      &trans             &kp LEFT_ARROW  &kp DOWN_ARROW  &kp RIGHT_ARROW  &kp RGUI
-&kp LSHFT  &trans          &trans          &kp LSHFT        &kp LGUI   &kp LA(LCTRL)      &kp RGUI    &kp RSHFT          &kp H           &trans          &kp J            &kp RSHIFT
-&trans     &trans          &trans          &trans           &trans     &trans             &kp DELETE  &kp LA(LC(ENTER))                                                   &trans
+&kp PG_UP  &trans          &kp UP_ARROW    &trans           &kp PG_DN                                 &kp PG_UP  &kp Y           &kp UP_ARROW    &kp U            &kp PG_DN
+&kp HOME   &kp LEFT_ARROW  &kp DOWN_ARROW  &kp RIGHT_ARROW  &kp END    &kp LA(LCTRL)      &trans      &kp HOME   &kp LEFT_ARROW  &kp DOWN_ARROW  &kp RIGHT_ARROW  &kp END
+&kp LSHFT  &trans          &trans          &trans           &kp LSHFT  &kp LGUI           &kp RGUI    &kp RSHFT  &kp H           &trans          &kp J            &kp RSHIFT
+&trans     &trans          &trans          &trans           &trans     &trans             &kp DELETE  &trans                                                      &trans
             >;
 
             sensor-bindings = <&inc_dec_kp LC(TAB) LC(LS(TAB))>;
