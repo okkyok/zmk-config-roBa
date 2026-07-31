@@ -731,11 +731,15 @@
         };
 
         mouse_layer {
+            // Y: AMLからの明示的な脱出キー。&trans+non-excludedのままでも
+            // いずれ抜けはするが、&to 0でBASEまで即時・確実に戻す。
+            // "y"は出力しない(脱出専用、muhennkannコンボのto_layer_0とは異なりキー出力なし)。
+
             bindings = <
-&trans  &trans  &trans  &trans  &trans                      &trans  &trans    &trans    &kp LG(C)  &trans
-&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &mkp MB1  &mkp MB3  &mkp MB2   &trans
-&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &mkp MB4  &trans    &mkp MB5   &trans
-&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans                                 &trans
+&trans  &trans  &trans  &trans  &trans                      &to 0  &trans    &trans    &kp LG(C)  &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans         &mkp MB1  &mkp MB3  &mkp MB2   &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans         &mkp MB4  &trans    &mkp MB5   &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans                                        &trans
             >;
 
             sensor-bindings = <&scroll_up_down>;
