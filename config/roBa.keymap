@@ -686,10 +686,10 @@
 
         symbol_layer {
             bindings = <
-&kp EQUAL     &kp SLASH  &kp ASTERISK  &kp MINUS  &kp PLUS                          &kp AMPERSAND   &kp CARET        &kp LEFT_BRACKET  &kp RIGHT_BRACKET  &kp AT_SIGN
-&kp EXCL      &kp DQT    &kp HASH      &kp DLLR   &kp PRCNT  &trans      &kp COLON  &kp LEFT_BRACE  &kp RIGHT_BRACE  &kp LPAR          &kp RPAR           &kp TILDE
-&mt LSHFT F1  &kp F2     &kp F3        &kp F4     &kp F5     &trans      &trans     &kp F6          &kp F7           &kp F8            &kp F9             &mt RSHIFT F10
-&trans        &trans     &trans        &trans     &trans     &trans      &trans     &trans                                                                &trans
+&kp EQUAL       &kp SLASH  &kp ASTERISK  &kp MINUS  &kp PLUS                          &kp AMPERSAND   &kp CARET        &kp LEFT_BRACKET  &kp RIGHT_BRACKET  &kp AT_SIGN
+&mt LCTRL EXCL  &kp DQT    &kp HASH      &kp DLLR   &kp PRCNT  &trans      &kp COLON  &kp LEFT_BRACE  &kp RIGHT_BRACE  &kp LPAR          &kp RPAR           &kp TILDE
+&mt LSHFT F1    &kp F2     &kp F3        &kp F4     &kp F5     &trans      &trans     &kp F6          &kp F7           &kp F8            &kp F9             &mt RSHIFT F10
+&trans          &trans     &trans        &trans     &trans     &trans      &trans     &trans                                                                &trans
             >;
 
             sensor-bindings = <&scroll_right_left>;
@@ -736,10 +736,10 @@
             // "y"は出力しない(脱出専用、muhennkannコンボのto_layer_0とは異なりキー出力なし)。
 
             bindings = <
-&trans  &trans  &trans  &trans  &trans                      &to 0  &trans    &trans    &kp LG(C)  &trans
-&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans         &mkp MB1  &mkp MB3  &mkp MB2   &trans
-&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans         &mkp MB4  &trans    &mkp MB5   &trans
-&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans                                        &trans
+&trans  &trans  &trans  &trans  &trans                      &to 0   &trans    &trans    &kp LG(C)  &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &mkp MB1  &mkp MB3  &mkp MB2   &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &mkp MB4  &trans    &mkp MB5   &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans                                 &trans
             >;
 
             sensor-bindings = <&scroll_up_down>;
