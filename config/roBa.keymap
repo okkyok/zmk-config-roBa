@@ -700,10 +700,10 @@
 
         default_layer {
             bindings = <
-&kp Q                     &kp W                          &kp E       &kp R           &kp T                                                                          &kp Y             &kp U       &kp I       &kp O           &lt_instant_tap SCROLL P
-&hm_instant LCTRL A       &hm_typing LS(LEFT_COMMAND) S  &mt LGUI D  &mt LALT F      &mt LCTRL G              &kp TAB                         &kp RGUI              &kp H             &mt RALT J  &mt RGUI K  &mt RS(RGUI) L  &mt RCTRL MINUS
-&hm_shift_z LEFT_SHIFT Z  &mt LEFT_SHIFT X               &kp C       &kp V           &kp B                    &lt MOUSE LS(TAB)               &kp RS(RA(RC(RGUI)))  &kp N             &kp M       &kp COMMA   &kp DOT         &mt LEFT_SHIFT SLASH
-&kp LGUI                  &kp LALT                       &kp LGUI    &lt BT_L LANG2  &lt_num_space NUM SPACE  &lt_to_layer_0 ARROW LANG1      &kp BACKSPACE         &lt SYMBOL ENTER                                          &lt MOUSE ESC
+&kp Q                     &kp W                          &kp E       &kp R           &kp T                                                                          &kp Y             &kp U       &kp I                &kp O           &lt_instant_tap SCROLL P
+&hm_instant LCTRL A       &hm_typing LS(LEFT_COMMAND) S  &mt LGUI D  &mt LALT F      &mt LCTRL G              &kp TAB                         &kp RGUI              &kp H             &mt RALT J  &mt RGUI K           &mt RS(RGUI) L  &mt RCTRL MINUS
+&hm_shift_z LEFT_SHIFT Z  &mt LEFT_SHIFT X               &mt LGUI C  &kp V           &kp B                    &lt MOUSE LS(TAB)               &kp RS(RA(RC(RGUI)))  &kp N             &kp M       &mt RIGHT_WIN COMMA  &mt RCTRL DOT   &mt LEFT_SHIFT SLASH
+&kp LGUI                  &kp LALT                       &kp LGUI    &lt BT_L LANG2  &lt_num_space NUM SPACE  &lt_to_layer_0 ARROW LANG1      &kp BACKSPACE         &lt SYMBOL ENTER                                                   &lt MOUSE ESC
             >;
 
             sensor-bindings = <&scroll_up_down>;
@@ -735,10 +735,10 @@
             // 右手側はWindows用ショートカット(Win+矢印スナップ, PrintScreen系)。Mac利用時は要調整。
 
             bindings = <
-&kp PG_UP  &trans          &kp UP_ARROW    &trans           &kp PG_DN                                 &kp PG_UP  &kp Y           &kp UP_ARROW    &kp U            &kp PG_DN
-&kp HOME   &kp LEFT_ARROW  &kp DOWN_ARROW  &kp RIGHT_ARROW  &kp END    &kp LA(LCTRL)      &trans      &kp HOME   &kp LEFT_ARROW  &kp DOWN_ARROW  &kp RIGHT_ARROW  &kp END
-&kp LSHFT  &trans          &trans          &trans           &kp LSHFT  &kp LGUI           &kp RGUI    &kp RSHFT  &kp H           &trans          &kp J            &kp RSHIFT
-&trans     &trans          &trans          &trans           &trans     &trans             &kp DELETE  &trans                                                      &trans
+&kp ESCAPE        &kp LWIN  &kp ENTER        &trans    &trans                                       &trans     &kp PG_UP       &kp UP_ARROW        &kp PAGE_DOWN    &trans
+&mt LCTRL DELETE  &kp TAB   &mt SPACE LCTRL  &kp LALT  &trans     &kp LA(LCTRL)      &trans         &trans     &kp LEFT_ARROW  &kp DOWN_ARROW      &kp RIGHT_ARROW  &trans
+&kp LSHFT         &kp LALT  &kp LGUI         &trans    &kp LSHFT  &kp LGUI           &kp RGUI       &kp RSHFT  &kp HOME        &kp K_CONTEXT_MENU  &kp END          &kp RSHIFT
+&trans            &trans    &trans           &trans    &trans     &trans             &kp BACKSPACE  &trans                                                          &trans
             >;
 
             sensor-bindings = <&inc_dec_kp LC(TAB) LC(LS(TAB))>;
