@@ -331,15 +331,6 @@
     };
 
     behaviors {
-        lt_to_layer_0: lt_to_layer_0 {
-            compatible = "zmk,behavior-hold-tap";
-            label = "LAYER_TAP_TO_0";
-            bindings = <&mo>, <&to_layer_0>;
-
-            #binding-cells = <2>;
-            tapping-term-ms = <200>;
-        };
-
         scroll_up_down: scroll_up_down {
             compatible = "zmk,behavior-sensor-rotate";
             #sensor-binding-cells = <0>;
@@ -501,22 +492,23 @@
             hold-trigger-key-positions = <0 1 3 4 9 11 12 13 14 17 18 19 20 23 24 25 26 29 30 33 41>;
         };
 
-        // NUM(スペース)長押し+Aが「1」でなく「スペース+a」になる誤爆対策。
-        // 原因は &lt の quick-tap-ms=300: スペースをタップした後300ms以内に
-        // 同キーを押し直すと、どれだけ長押ししてもタップ(スペース押しっぱなし)
-        // 確定となり、NUMレイヤーに入らないままAが「a」で出る。
-        // 「変換/スペース→すぐ数字入力」の速い流れでちょうど踏む。
-        // 折衷案としてquick-tap-msを300→150に短縮(0にはしない)。
-        // スペースのオートリピート連打(タップ直後に押し直して長押し)は
-        // 150ms以内の速い押し直しに限り従来どおり有効なまま、
-        // 「変換確定→数字」のようなやや間の空く(150ms超の)押し直しでは
-        // 長押しがNUMとして正しく確定するようにする。0にする案より
-        // 誤爆の再発余地はわずかに残るが、スペース連打の使い勝手を残す。
-        // Enter(SYMBOL)等の他の &lt には手を付けず影響をスペースに限定する。
+        // BT_L(スペース)長押し+文字キーが「1」でなく「スペース+文字」になる
+        // 誤爆対策。原因は &lt の quick-tap-ms=300: スペースをタップした後
+        // 300ms以内に同キーを押し直すと、どれだけ長押ししてもタップ
+        // (スペース押しっぱなし)確定となり、BT_Lレイヤーに入らないまま
+        // 後続キーがそのまま出る。「変換/スペース→すぐ次の入力」の速い
+        // 流れでちょうど踏む。折衷案としてquick-tap-msを300→150に短縮
+        // (0にはしない)。スペースのオートリピート連打(タップ直後に押し
+        // 直して長押し)は150ms以内の速い押し直しに限り従来どおり有効な
+        // まま、やや間の空く(150ms超の)押し直しでは長押しがBT_Lとして
+        // 正しく確定するようにする。0にする案より誤爆の再発余地はわずかに
+        // 残るが、スペース連打の使い勝手を残す。他の &lt には手を付けず
+        // 影響をスペースに限定する。以前NUM+スペースで使っていた
+        // lt_num_space と同じ機構をBT_L向けに流用したもの。
 
-        lt_num_space: lt_num_space {
+        lt_bt_space: lt_bt_space {
             compatible = "zmk,behavior-hold-tap";
-            label = "LT_NUM_SPACE";
+            label = "LT_BT_SPACE";
             bindings = <&mo>, <&kp>;
 
             #binding-cells = <2>;
@@ -703,7 +695,7 @@
 &kp Q                     &kp W             &kp E       &kp R  &kp T                                                          &kp Y       &kp U  &kp I                &kp O          &lt_instant_tap SCROLL P
 &hm_instant LCTRL A       &kp S             &mt LGUI D  &kp F  &mt LCTRL G  &kp TAB                     &kp RGUI              &kp H       &kp J  &mt RGUI K           &kp L          &mt RCTRL MINUS
 &hm_shift_z LEFT_SHIFT Z  &mt LEFT_SHIFT X  &mt LGUI C  &kp V  &kp B        &lt MOUSE LS(TAB)           &kp RS(RA(RC(RGUI)))  &kp N       &kp M  &mt RIGHT_WIN COMMA  &mt RCTRL DOT  &mt LEFT_SHIFT SLASH
-&kp LGUI                  &kp LALT          &kp LGUI    &mo 3  &mo NUM      &lt_to_layer_0 4 SPACE      &mt RCTRL ENTER       &mo SYMBOL                                             &lt MOUSE ESC
+&kp LGUI                  &kp LALT          &kp LGUI    &mo 3  &mo NUM      &lt_bt_space BT_L SPACE     &mt RCTRL ENTER       &mo SYMBOL                                             &lt MOUSE ESC
             >;
 
             sensor-bindings = <&scroll_up_down>;
