@@ -398,7 +398,11 @@
         //    S長押しを始めるショートカットは効かない(一拍おいてから押す)
         // quick-tap=300はタップ直後の押し直しを必ずタップに倒す(&mtと同値)。
         // D(Cmd)/F(Alt)/G(Ctrl)にも同型の誤爆リスクはあるが、実害報告のある
-        // Sのみ差し替え、他は顕在化したら同じbehaviorへ寄せる。
+        // ものだけ差し替え、他は顕在化したら同じbehaviorへ寄せる。
+        // C(Cmd)は「ちゃ/ち/ちゅ/ちょ」等ローマ字のch直後打鍵でC+HがCmd+H
+        // (アプリを隠す)に化ける誤爆が実際に起きたため、同じhm_typingへ
+        // 差し替え済み(下記keymap参照)。V/Z等の意図的なCmd+キーはCを
+        // 200ms押し込んでhold確定させてから相手キーを押せば従来どおり動く。
 
         hm_typing: hm_typing {
             compatible = "zmk,behavior-hold-tap";
@@ -692,10 +696,10 @@
 
         default_layer {
             bindings = <
-&kp Q                     &kp W             &kp E       &kp R  &kp T                                                              &kp Y             &kp U  &kp I                &kp O          &lt_instant_tap SCROLL P
-&hm_instant LCTRL A       &kp S             &kp D       &kp F  &kp G                    &kp LANGUAGE_1      &kp RGUI              &kp H             &kp J  &kp K                &kp L          &mt RCTRL MINUS
-&hm_shift_z LEFT_SHIFT Z  &mt LEFT_SHIFT X  &mt LGUI C  &kp V  &kp B                    &kp LANGUAGE_2      &kp RS(RA(RC(RGUI)))  &kp N             &kp M  &mt RIGHT_WIN COMMA  &mt RCTRL DOT  &mt LEFT_SHIFT SLASH
-&kp LGUI                  &kp LALT          &kp LGUI    &mo 3  &lt_num_space NUM SPACE  &mo BT_L            &kp BACKSPACE         &lt SYMBOL ENTER                                             &lt MOUSE ESC
+&kp Q                     &kp W             &kp E               &kp R  &kp T                                                              &kp Y             &kp U  &kp I                &kp O          &lt_instant_tap SCROLL P
+&hm_instant LCTRL A       &kp S             &kp D               &kp F  &kp G                    &kp LANGUAGE_1      &kp RGUI              &kp H             &kp J  &kp K                &kp L          &mt RCTRL MINUS
+&hm_shift_z LEFT_SHIFT Z  &mt LEFT_SHIFT X  &hm_typing LGUI C   &kp V  &kp B                    &kp LANGUAGE_2      &kp RS(RA(RC(RGUI)))  &kp N             &kp M  &mt RIGHT_WIN COMMA  &mt RCTRL DOT  &mt LEFT_SHIFT SLASH
+&kp LGUI                  &kp LALT          &kp LGUI            &mo 3  &lt_num_space NUM SPACE  &mo BT_L            &kp BACKSPACE         &lt SYMBOL ENTER                                             &lt MOUSE ESC
             >;
 
             sensor-bindings = <&scroll_up_down>;
