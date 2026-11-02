@@ -696,10 +696,10 @@
 
         default_layer {
             bindings = <
-&kp Q                     &kp W             &kp E               &kp R  &kp T                                                              &kp Y             &kp U  &kp I                &kp O          &lt_instant_tap SCROLL P
-&hm_instant LCTRL A       &kp S             &kp D               &kp F  &kp G                    &kp LANGUAGE_1      &kp RGUI              &kp H             &kp J  &kp K                &kp L          &mt RCTRL MINUS
-&hm_shift_z LEFT_SHIFT Z  &mt LEFT_SHIFT X  &hm_typing LGUI C   &kp V  &kp B                    &kp LANGUAGE_2      &kp RS(RA(RC(RGUI)))  &kp N             &kp M  &mt RIGHT_WIN COMMA  &mt RCTRL DOT  &mt LEFT_SHIFT SLASH
-&kp LGUI                  &kp LALT          &kp LGUI            &mo 3  &lt_num_space NUM SPACE  &mo BT_L            &kp BACKSPACE         &lt SYMBOL ENTER                                             &lt MOUSE ESC
+&kp Q                     &kp W             &kp E              &kp R  &kp T                                                              &kp Y             &kp U  &kp I                &kp O          &lt_instant_tap SCROLL P
+&hm_instant LCTRL A       &kp S             &kp D              &kp F  &kp G                    &kp LANGUAGE_1      &kp RGUI              &kp H             &kp J  &kp K                &kp L          &mt RCTRL MINUS
+&hm_shift_z LEFT_SHIFT Z  &mt LEFT_SHIFT X  &hm_typing LGUI C  &kp V  &kp B                    &kp LANGUAGE_2      &kp RS(RA(RC(RGUI)))  &kp N             &kp M  &mt RIGHT_WIN COMMA  &mt RCTRL DOT  &mt LEFT_SHIFT SLASH
+&kp LGUI                  &kp LALT          &kp LGUI           &mo 3  &lt_num_space NUM SPACE  &mo BT_L            &kp BACKSPACE         &lt SYMBOL ENTER                                             &lt MOUSE ESC
             >;
 
             sensor-bindings = <&scroll_up_down>;
@@ -709,7 +709,7 @@
             bindings = <
 &kp EQUAL       &kp SLASH  &kp ASTERISK  &kp MINUS  &kp PLUS                          &kp AMPERSAND           &kp CARET        &kp LEFT_BRACKET  &kp RIGHT_BRACKET  &kp AT_SIGN
 &mt LCTRL EXCL  &kp DQT    &kp HASH      &kp DLLR   &kp PRCNT  &trans      &kp COLON  &mm_symbol_lbrace_bspc  &kp RIGHT_BRACE  &kp LPAR          &kp RPAR           &kp TILDE
-&mt LSHFT F1    &kp F2     &kp F3        &kp F4     &kp F5     &trans      &trans     &kp F6                  &kp F7           &kp F8            &kp F9             &mt RSHIFT F10
+&mt LSHFT F1    &kp F2     &kp F3        &kp F4     &kp F5     &trans      &kp SEMI   &kp F6                  &kp F7           &kp F8            &kp F9             &mt RSHIFT F10
 &trans          &trans     &trans        &trans     &trans     &trans      &trans     &trans                                                                        &trans
             >;
 
