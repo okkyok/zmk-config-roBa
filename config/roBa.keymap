@@ -718,10 +718,10 @@
 
         num_layer {
             bindings = <
-&kp EQUAL           &kp SLASH     &kp STAR      &kp MINUS     &kp PLUS                                       &kp LA(Y)       &kp DOLLAR    &kp PIPE      &kp COLON              &kp PERCENT
-&mt LCTRL NUMBER_1  &kp NUMBER_2  &kp NUMBER_3  &kp NUMBER_4  &kp NUMBER_5   &trans               &mul_mark  &mm_num_6_bspc  &kp NUMBER_7  &kp NUMBER_8  &mt RS(RGUI) NUMBER_9  &mt RCTRL NUMBER_0
-&mt LSHFT NUMBER_6  &kp NUMBER_7  &kp NUMBER_8  &kp NUMBER_9  &kp BACKSLASH  &kp KP_MULTIPLY      &div_mark  &kp F11         &kp F12       &kp COMMA     &kp DOT                &mt RSHIFT DOLLAR
-&trans              &trans        &trans        &trans        &trans         &trans               &trans     &trans                                                             &trans
+&kp EQUAL           &kp SLASH             &kp STAR      &kp MINUS     &kp PLUS                                       &kp LA(Y)       &kp DOLLAR    &kp PIPE      &kp COLON              &kp PERCENT
+&mt LCTRL NUMBER_1  &kp NUMBER_2          &kp NUMBER_3  &kp NUMBER_4  &kp NUMBER_5   &trans               &mul_mark  &mm_num_6_bspc  &kp NUMBER_7  &kp NUMBER_8  &mt RS(RGUI) NUMBER_9  &mt RCTRL NUMBER_0
+&mt LSHFT NUMBER_6  &kp LS(LG(NUMBER_2))  &kp NUMBER_8  &kp NUMBER_9  &kp BACKSLASH  &kp KP_MULTIPLY      &div_mark  &kp F11         &kp F12       &kp COMMA     &kp DOT                &mt RSHIFT DOLLAR
+&trans              &trans                &trans        &trans        &trans         &trans               &trans     &trans                                                             &trans
             >;
 
             sensor-bindings = <&scroll_up_down>;
@@ -731,10 +731,10 @@
             // 右手側はWindows用ショートカット(Win+矢印スナップ, PrintScreen系)。Mac利用時は要調整。
 
             bindings = <
-&kp ESCAPE        &kp LWIN  &kp ENTER        &trans    &trans                                       &trans     &kp PG_UP       &kp UP_ARROW        &kp PAGE_DOWN    &trans
-&mt LCTRL DELETE  &kp TAB   &mt SPACE LCTRL  &kp LALT  &trans     &kp LA(LCTRL)      &trans         &trans     &kp LEFT_ARROW  &kp DOWN_ARROW      &kp RIGHT_ARROW  &trans
-&kp LGUI          &trans    &trans           &trans    &kp LSHFT  &kp LGUI           &kp RGUI       &kp RSHFT  &kp HOME        &kp K_CONTEXT_MENU  &kp END          &kp RSHIFT
-&trans            &trans    &trans           &trans    &trans     &trans             &kp BACKSPACE  &trans                                                          &trans
+&kp ESCAPE        &kp LWIN  &kp ENTER  &trans    &trans                                       &trans     &kp PG_UP       &kp UP_ARROW        &kp PAGE_DOWN    &trans
+&mt LCTRL DELETE  &kp LGUI  &kp LSHFT  &kp LALT  &trans     &kp LA(LCTRL)      &trans         &trans     &kp LEFT_ARROW  &kp DOWN_ARROW      &kp RIGHT_ARROW  &trans
+&kp LGUI          &trans    &trans     &trans    &kp LSHFT  &kp LGUI           &kp RGUI       &kp RSHFT  &kp HOME        &kp K_CONTEXT_MENU  &kp END          &kp RSHIFT
+&trans            &trans    &trans     &trans    &trans     &trans             &kp BACKSPACE  &trans                                                          &trans
             >;
 
             sensor-bindings = <&inc_dec_kp LC(TAB) LC(LS(TAB))>;
