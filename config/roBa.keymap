@@ -733,7 +733,7 @@
             bindings = <
 &kp ESCAPE        &kp LWIN  &kp ENTER        &trans    &trans                                       &trans     &kp PG_UP       &kp UP_ARROW        &kp PAGE_DOWN    &trans
 &mt LCTRL DELETE  &kp TAB   &mt SPACE LCTRL  &kp LALT  &trans     &kp LA(LCTRL)      &trans         &trans     &kp LEFT_ARROW  &kp DOWN_ARROW      &kp RIGHT_ARROW  &trans
-&kp LSHFT         &kp LALT  &kp LGUI         &trans    &kp LSHFT  &kp LGUI           &kp RGUI       &kp RSHFT  &kp HOME        &kp K_CONTEXT_MENU  &kp END          &kp RSHIFT
+&kp LGUI          &trans    &trans           &trans    &kp LSHFT  &kp LGUI           &kp RGUI       &kp RSHFT  &kp HOME        &kp K_CONTEXT_MENU  &kp END          &kp RSHIFT
 &trans            &trans    &trans           &trans    &trans     &trans             &kp BACKSPACE  &trans                                                          &trans
             >;
 
