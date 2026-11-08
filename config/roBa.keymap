@@ -562,12 +562,12 @@
             keep-mods = <(MOD_LCTL)>;
         };
 
-        // Ctrl+6(NUM層のH位置)・Ctrl+{(SYMBOL層のH位置)をBackspaceにする。
+        // Ctrl+6(NUM層のH位置)・Ctrl+<(SYMBOL層のH位置)をBackspaceにする。
         // CtrlはAのhold-tap(LCTRL)から供給されるため、押下時点でmodsに
         // LCTRL/RCTRLが立っている。mm_bt_s_q/mm_bt_d_wはkeep-modsでCtrlを
         // 残して送っているが、ここは逆にCtrl抜きの単発Backspaceが欲しいので
         // keep-modsは付けない(mod-morphは発火時のmodsをデフォルトで
-        // マスクする)。Ctrl非押下時は従来どおり6 / { が出る。
+        // マスクする)。Ctrl非押下時は6 / < が出る(SYMBOL層は右隣の>と対にするため{から変更)。
 
         mm_num_6_bspc: mm_num_6_bspc {
             compatible = "zmk,behavior-mod-morph";
@@ -582,7 +582,7 @@
             compatible = "zmk,behavior-mod-morph";
             label = "MM_SYMBOL_LBRACE_BSPC";
             #binding-cells = <0>;
-            bindings = <&kp LEFT_BRACE>, <&kp BACKSPACE>;
+            bindings = <&kp LESS_THAN>, <&kp BACKSPACE>;
 
             mods = <(MOD_LCTL|MOD_RCTL)>;
         };
